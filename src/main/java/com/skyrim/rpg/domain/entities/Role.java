@@ -3,6 +3,7 @@ package com.skyrim.rpg.domain.entities;
 import java.util.List;
 
 public abstract class Role {
+    private int id;
     private String name;
     private String description;
     private List<Skill> skills;
@@ -11,7 +12,8 @@ public abstract class Role {
     private int baseAttack;
     private int baseDefense;
 
-    public Role(String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense) {
+    public Role(int id, String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.skills = skills;
@@ -19,6 +21,14 @@ public abstract class Role {
         this.baseMana = baseMana;
         this.baseAttack = baseAttack;
         this.baseDefense = baseDefense;
+    }
+
+    protected int getId() {
+        return id;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
     }
 
     protected String getName() {
@@ -82,7 +92,8 @@ public abstract class Role {
     @Override
     public String toString() {
         return "Role{" +
-                "name='" + getName() + '\'' +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", skills=" + getSkills() +
                 ", baseHealth=" + getBaseHealth() +

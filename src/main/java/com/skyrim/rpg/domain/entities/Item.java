@@ -4,15 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Item {
+    private int id;
     private String name;
     private String description;
     private int value;
     private List<String> effects;
 
-    public Item(String name, int value, List<String> effects) {
+    public Item(int id, String name, String description, int value, List<String> effects) {
+        this.id = id;
         this.name = name;
+        this.description = description;
         this.value = value;
-        this.effects = new ArrayList<>();
+        this.effects = effects;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -50,7 +61,8 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" +
-                "name='" + getName() + '\'' +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", value=" + getValue() +
                 ", effects=" + getEffects() +
