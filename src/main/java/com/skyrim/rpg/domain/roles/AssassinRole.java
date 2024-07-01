@@ -12,6 +12,7 @@ public class AssassinRole extends Role {
 
     public AssassinRole() {
         super(
+                RoleEnum.ASSASSIN.getRoleId(),
                 RoleEnum.ASSASSIN.getRoleName(),
                 RoleEnum.ASSASSIN.getDescription(),
                 RoleEnum.ASSASSIN.getSkills(),
@@ -30,6 +31,7 @@ public class AssassinRole extends Role {
     private static List<Skill> getDefaultSkills() {
         List<Skill> skills = new ArrayList<>();
         skills.add(new Skill(
+                SkillEnum.VENOMOUS_STRIKE.getId(),
                 SkillEnum.VENOMOUS_STRIKE.getName(),
                 SkillEnum.VENOMOUS_STRIKE.getDescription(),
                 SkillEnum.VENOMOUS_STRIKE.getManaCost(),

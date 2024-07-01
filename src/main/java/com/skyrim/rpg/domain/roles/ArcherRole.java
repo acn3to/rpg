@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArcherRole extends Role {
+    private int dexterity;
 
-    public ArcherRole() {
+    public ArcherRole(int id, String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense, int dexterity) {
         super(
+                RoleEnum.ARCHER.getRoleId(),
                 RoleEnum.ARCHER.getRoleName(),
                 RoleEnum.ARCHER.getDescription(),
                 RoleEnum.ARCHER.getSkills(),
@@ -19,7 +21,16 @@ public class ArcherRole extends Role {
                 RoleEnum.ARCHER.getBaseMana(),
                 RoleEnum.ARCHER.getBaseAttack(),
                 RoleEnum.ARCHER.getBaseDefense()
-                );
+        );
+        this.dexterity = dexterity;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public void setDexterity(int dexterity) {
+        this.dexterity = dexterity;
     }
 
     @Override
@@ -30,6 +41,7 @@ public class ArcherRole extends Role {
     private static List<Skill> getDefaultSkills() {
         List<Skill> skills = new ArrayList<>();
         skills.add(new Skill(
+                SkillEnum.PRECISION_SHOT.getId(),
                 SkillEnum.PRECISION_SHOT.getName(),
                 SkillEnum.PRECISION_SHOT.getDescription(),
                 SkillEnum.PRECISION_SHOT.getManaCost(),
