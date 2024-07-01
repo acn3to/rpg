@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AssassinRole extends Role {
+    private int agility;
 
-    public AssassinRole() {
+    public AssassinRole(int id, String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense, int agility) {
         super(
                 RoleEnum.ASSASSIN.getRoleId(),
                 RoleEnum.ASSASSIN.getRoleName(),
@@ -21,6 +22,15 @@ public class AssassinRole extends Role {
                 RoleEnum.ASSASSIN.getBaseAttack(),
                 RoleEnum.ASSASSIN.getBaseDefense()
         );
+        this.agility = agility;
+    }
+
+    public int getAgility() {
+        return agility;
+    }
+
+    public void setAgility(int agility) {
+        this.agility = agility;
     }
 
     @Override

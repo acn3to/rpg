@@ -9,9 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MageRole extends Role {
+    private int intelligence;
 
-    public MageRole() {
+    public MageRole(String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense, int intelligence) {
         super(
+                RoleEnum.MAGE.getRoleId(),
                 RoleEnum.MAGE.getRoleName(),
                 RoleEnum.MAGE.getDescription(),
                 RoleEnum.MAGE.getSkills(),
@@ -20,6 +22,15 @@ public class MageRole extends Role {
                 RoleEnum.MAGE.getBaseAttack(),
                 RoleEnum.MAGE.getBaseDefense()
         );
+        this.intelligence = intelligence;
+    }
+
+    public int getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(int intelligence) {
+        this.intelligence = intelligence;
     }
 
     @Override
@@ -30,6 +41,7 @@ public class MageRole extends Role {
     private static List<Skill> getDefaultSkills() {
         List<Skill> skills = new ArrayList<>();
         skills.add(new Skill(
+                SkillEnum.GLACIAL_SPIKE.getId(),
                 SkillEnum.GLACIAL_SPIKE.getName(),
                 SkillEnum.GLACIAL_SPIKE.getDescription(),
                 SkillEnum.GLACIAL_SPIKE.getManaCost(),
