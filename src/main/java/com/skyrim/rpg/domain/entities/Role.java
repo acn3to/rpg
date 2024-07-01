@@ -77,7 +77,7 @@ public abstract class Role {
         this.baseDefense = baseDefense;
     }
 
-    public abstract void useSkill(Skill skill);
+    public abstract Skill useSkill(Skill skill);
 
     @Override
     public String toString() {
