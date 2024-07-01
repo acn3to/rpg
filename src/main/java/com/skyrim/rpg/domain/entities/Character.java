@@ -1,26 +1,23 @@
 package com.skyrim.rpg.domain.entities;
 
 public class Character {
+    private Long id;
     private String name;
     private Role role;
     private int level;
+    private int xpPoints;
     private int healthPoints;
     private int manaPoints;
-    private int strength;
-    private int intelligence;
-    private int dexterity;
-    private int agility;
 
-    public Character(String name, Role role, int level, int healthPoints, int manaPoints, int strength, int intelligence, int dexterity, int agility) {
+
+    public Character(Long id, String name, Role role, int level, int xpPoints, int healthPoints, int manaPoints) {
+        this.id = id;
         this.name = name;
         this.role = role;
         this.level = level;
+        this.xpPoints = xpPoints;
         this.healthPoints = healthPoints;
         this.manaPoints = manaPoints;
-        this.strength = strength;
-        this.intelligence = intelligence;
-        this.dexterity = dexterity;
-        this.agility = agility;
     }
 
     protected String getName() {
@@ -47,6 +44,22 @@ public class Character {
         this.level = level;
     }
 
+    protected Long getId() {
+        return id;
+    }
+
+    protected void setId(Long id) {
+        this.id = id;
+    }
+
+    public int getXpPoints() {
+        return xpPoints;
+    }
+
+    public void setXpPoints(int xpPoints) {
+        this.xpPoints = xpPoints;
+    }
+
     protected int getHealthPoints() {
         return healthPoints;
     }
@@ -63,50 +76,16 @@ public class Character {
         this.manaPoints = manaPoints;
     }
 
-    protected int getStrength() {
-        return strength;
-    }
-
-    protected void setStrength(int strength) {
-        this.strength = strength;
-    }
-
-    protected int getIntelligence() {
-        return intelligence;
-    }
-
-    protected void setIntelligence(int intelligence) {
-        this.intelligence = intelligence;
-    }
-
-    protected int getDexterity() {
-        return dexterity;
-    }
-
-    protected void setDexterity(int dexterity) {
-        this.dexterity = dexterity;
-    }
-
-    protected int getAgility() {
-        return agility;
-    }
-
-    protected void setAgility(int agility) {
-        this.agility = agility;
-    }
-
     @Override
     public String toString() {
         return "Character{" +
-                "name='" + name + '\'' +
-                ", role=" + role +
-                ", level=" + level +
-                ", healthPoints=" + healthPoints +
-                ", manaPoints=" + manaPoints +
-                ", strength=" + strength +
-                ", intelligence=" + intelligence +
-                ", dexterity=" + dexterity +
-                ", agility=" + agility +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", role=" + getRole() +
+                ", level=" + getLevel() +
+                ", xpPoints=" + getXpPoints() +
+                ", healthPoints=" + getHealthPoints() +
+                ", manaPoints=" + getManaPoints() +
                 '}';
     }
 }
