@@ -13,8 +13,8 @@ public class ArcherRole extends Role {
 
     public ArcherRole(int id, String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense, int dexterity) {
         super(
-                RoleEnum.ARCHER.getRoleId(),
-                RoleEnum.ARCHER.getRoleName(),
+                RoleEnum.ARCHER.getId(),
+                RoleEnum.ARCHER.getName(),
                 RoleEnum.ARCHER.getDescription(),
                 RoleEnum.ARCHER.getSkills(),
                 RoleEnum.ARCHER.getBaseHealth(),
@@ -43,6 +43,7 @@ public class ArcherRole extends Role {
         skills.add(new Skill(
                 SkillEnum.PRECISION_SHOT.getId(),
                 SkillEnum.PRECISION_SHOT.getName(),
+                SkillEnum.PRECISION_SHOT.getType(),
                 SkillEnum.PRECISION_SHOT.getDescription(),
                 SkillEnum.PRECISION_SHOT.getManaCost(),
                 SkillEnum.PRECISION_SHOT.getPower()

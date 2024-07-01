@@ -13,8 +13,8 @@ public class MageRole extends Role {
 
     public MageRole(String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense, int intelligence) {
         super(
-                RoleEnum.MAGE.getRoleId(),
-                RoleEnum.MAGE.getRoleName(),
+                RoleEnum.MAGE.getId(),
+                RoleEnum.MAGE.getName(),
                 RoleEnum.MAGE.getDescription(),
                 RoleEnum.MAGE.getSkills(),
                 RoleEnum.MAGE.getBaseHealth(),
@@ -43,6 +43,7 @@ public class MageRole extends Role {
         skills.add(new Skill(
                 SkillEnum.GLACIAL_SPIKE.getId(),
                 SkillEnum.GLACIAL_SPIKE.getName(),
+                SkillEnum.GLACIAL_SPIKE.getType(),
                 SkillEnum.GLACIAL_SPIKE.getDescription(),
                 SkillEnum.GLACIAL_SPIKE.getManaCost(),
                 SkillEnum.GLACIAL_SPIKE.getPower()

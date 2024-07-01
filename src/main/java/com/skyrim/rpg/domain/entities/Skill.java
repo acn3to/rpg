@@ -3,13 +3,15 @@ package com.skyrim.rpg.domain.entities;
 public class Skill {
     private int id;
     private String name;
+    private String type;
     private String description;
     private int manaCost;
     private int power;
 
-    public Skill(int id, String name, String description, int manaCost, int power) {
+    public Skill(int id, String name, String type, String description, int manaCost, int power) {
         this.id = id;
         this.name = name;
+        this.type = type;
         this.description = description;
         this.manaCost = manaCost;
         this.power = power;
@@ -29,6 +31,14 @@ public class Skill {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getDescription() {
@@ -60,6 +70,7 @@ public class Skill {
         return "Skill{" +
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
+                ", type='" + getType() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", manaCost=" + getManaCost() +
                 ", power=" + getPower() +

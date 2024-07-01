@@ -13,8 +13,8 @@ public class AssassinRole extends Role {
 
     public AssassinRole(int id, String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense, int agility) {
         super(
-                RoleEnum.ASSASSIN.getRoleId(),
-                RoleEnum.ASSASSIN.getRoleName(),
+                RoleEnum.ASSASSIN.getId(),
+                RoleEnum.ASSASSIN.getName(),
                 RoleEnum.ASSASSIN.getDescription(),
                 RoleEnum.ASSASSIN.getSkills(),
                 RoleEnum.ASSASSIN.getBaseHealth(),
@@ -43,6 +43,7 @@ public class AssassinRole extends Role {
         skills.add(new Skill(
                 SkillEnum.VENOMOUS_STRIKE.getId(),
                 SkillEnum.VENOMOUS_STRIKE.getName(),
+                SkillEnum.VENOMOUS_STRIKE.getType(),
                 SkillEnum.VENOMOUS_STRIKE.getDescription(),
                 SkillEnum.VENOMOUS_STRIKE.getManaCost(),
                 SkillEnum.VENOMOUS_STRIKE.getPower()

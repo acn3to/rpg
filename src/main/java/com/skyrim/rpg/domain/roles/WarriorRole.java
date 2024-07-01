@@ -13,8 +13,8 @@ public class WarriorRole extends Role {
 
     public WarriorRole(String name, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense, int strength) {
         super(
-                RoleEnum.WARRIOR.getRoleId(),
-                RoleEnum.WARRIOR.getRoleName(),
+                RoleEnum.WARRIOR.getId(),
+                RoleEnum.WARRIOR.getName(),
                 RoleEnum.WARRIOR.getDescription(),
                 RoleEnum.WARRIOR.getSkills(),
                 RoleEnum.WARRIOR.getBaseHealth(),
@@ -43,6 +43,7 @@ public class WarriorRole extends Role {
         skills.add(new Skill(
                 SkillEnum.THUNDEROUS_BLOW.getId(),
                 SkillEnum.THUNDEROUS_BLOW.getName(),
+                SkillEnum.THUNDEROUS_BLOW.getType(),
                 SkillEnum.THUNDEROUS_BLOW.getDescription(),
                 SkillEnum.THUNDEROUS_BLOW.getManaCost(),
                 SkillEnum.THUNDEROUS_BLOW.getPower()

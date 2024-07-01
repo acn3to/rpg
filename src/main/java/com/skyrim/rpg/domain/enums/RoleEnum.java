@@ -12,6 +12,7 @@ public enum RoleEnum {
             List.of(new Skill(
                     SkillEnum.PRECISION_SHOT.getId(),
                     SkillEnum.PRECISION_SHOT.getName(),
+                    SkillEnum.PRECISION_SHOT.getType(),
                     SkillEnum.PRECISION_SHOT.getDescription(),
                     SkillEnum.PRECISION_SHOT.getManaCost(),
                     SkillEnum.PRECISION_SHOT.getPower()
@@ -29,6 +30,7 @@ public enum RoleEnum {
             List.of(new Skill(
                     SkillEnum.THUNDEROUS_BLOW.getId(),
                     SkillEnum.THUNDEROUS_BLOW.getName(),
+                    SkillEnum.THUNDEROUS_BLOW.getType(),
                     SkillEnum.THUNDEROUS_BLOW.getDescription(),
                     SkillEnum.THUNDEROUS_BLOW.getManaCost(),
                     SkillEnum.THUNDEROUS_BLOW.getPower()
@@ -46,6 +48,7 @@ public enum RoleEnum {
             List.of(new Skill(
                     SkillEnum.GLACIAL_SPIKE.getId(),
                     SkillEnum.GLACIAL_SPIKE.getName(),
+                    SkillEnum.GLACIAL_SPIKE.getType(),
                     SkillEnum.GLACIAL_SPIKE.getDescription(),
                     SkillEnum.GLACIAL_SPIKE.getManaCost(),
                     SkillEnum.GLACIAL_SPIKE.getPower()
@@ -63,6 +66,7 @@ public enum RoleEnum {
             List.of(new Skill(
                     SkillEnum.PRECISION_SHOT.getId(),
                     SkillEnum.VENOMOUS_STRIKE.getName(),
+                    SkillEnum.VENOMOUS_STRIKE.getType(),
                     SkillEnum.VENOMOUS_STRIKE.getDescription(),
                     SkillEnum.VENOMOUS_STRIKE.getManaCost(),
                     SkillEnum.VENOMOUS_STRIKE.getPower()
@@ -73,8 +77,8 @@ public enum RoleEnum {
             10
     );
 
-    private final int roleId;
-    private final String roleName;
+    private final int id;
+    private final String name;
     private final String description;
     private final List<Skill> skills;
     private final int baseHealth;
@@ -83,8 +87,8 @@ public enum RoleEnum {
     private final int baseDefense;
 
     RoleEnum(int roleId, String roleName, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense) {
-        this.roleId = roleId;
-        this.roleName = roleName;
+        this.id = roleId;
+        this.name = roleName;
         this.description = description;
         this.skills = skills;
         this.baseHealth = baseHealth;
@@ -93,12 +97,12 @@ public enum RoleEnum {
         this.baseDefense = baseDefense;
     }
 
-    public int getRoleId() {
-        return roleId;
+    public int getId() {
+        return id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
