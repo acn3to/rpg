@@ -5,7 +5,7 @@ public class Player extends Character {
 
     public Player(int id, String name, Role role, int level, int xpPoints, int healthPoints, int manaPoints, int gold) {
         super(id, name, role, level, xpPoints, healthPoints, manaPoints);
-        this.gold = 100;
+        this.gold = gold;
     }
 
     public int getGold() {
@@ -14,6 +14,14 @@ public class Player extends Character {
 
     public void setGold(int gold) {
         this.gold = gold;
+    }
+
+    public String retrieveName() {
+        return this.getName();
+    }
+
+    public Role retrieveRole() {
+        return this.getRole();
     }
 
     @Override

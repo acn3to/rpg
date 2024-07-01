@@ -59,6 +59,10 @@ public class Enemy extends Character {
         this.loot = loot;
     }
 
+    public String retrieveName() {
+        return this.getName();
+    }
+
     @Override
     public String toString() {
         return "Enemy{" +
