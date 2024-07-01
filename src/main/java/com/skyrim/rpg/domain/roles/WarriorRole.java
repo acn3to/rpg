@@ -49,4 +49,19 @@ public class WarriorRole extends Role {
         ));
         return skills;
     }
+
+    @Override
+    public String toString() {
+        return "ArcherRole{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", skills=" + getSkills() +
+                ", baseHealth=" + getBaseHealth() +
+                ", baseMana=" + getBaseMana() +
+                ", baseAttack=" + getBaseAttack() +
+                ", baseDefense=" + getBaseDefense() +
+                ", strength=" + getStrength() +
+                '}';
+    }
 }

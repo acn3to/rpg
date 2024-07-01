@@ -49,4 +49,19 @@ public class AssassinRole extends Role {
         ));
         return skills;
     }
+
+    @Override
+    public String toString() {
+        return "AssassinRole{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", skills=" + getSkills() +
+                ", baseHealth=" + getBaseHealth() +
+                ", baseMana=" + getBaseMana() +
+                ", baseAttack=" + getBaseAttack() +
+                ", baseDefense=" + getBaseDefense() +
+                ", agility=" + getAgility() +
+                '}';
+    }
 }
