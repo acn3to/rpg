@@ -38,6 +38,12 @@ public class MageRole extends Role {
         return skill;
     }
 
+    @Override
+    public double getCriticalChance() {
+        return intelligence * 0.02;
+    }
+
+
     private static List<Skill> getDefaultSkills() {
         List<Skill> skills = new ArrayList<>();
         skills.add(new Skill(

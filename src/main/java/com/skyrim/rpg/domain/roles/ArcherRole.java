@@ -38,6 +38,11 @@ public class ArcherRole extends Role {
         return skill;
     }
 
+    @Override
+    public double getCriticalChance() {
+        return dexterity * 0.07;
+    }
+
     private static List<Skill> getDefaultSkills() {
         List<Skill> skills = new ArrayList<>();
         skills.add(new Skill(

@@ -38,6 +38,12 @@ public class AssassinRole extends Role {
         return skill;
     }
 
+    @Override
+    public double getCriticalChance() {
+        return agility * 0.05;
+    }
+
+
     private static List<Skill> getDefaultSkills() {
         List<Skill> skills = new ArrayList<>();
         skills.add(new Skill(

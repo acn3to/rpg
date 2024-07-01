@@ -38,6 +38,12 @@ public class WarriorRole extends Role {
         return skill;
     }
 
+    @Override
+    public double getCriticalChance() {
+        return strength * 0.03;
+    }
+
+
     private static List<Skill> getDefaultSkills() {
         List<Skill> skills = new ArrayList<>();
         skills.add(new Skill(

@@ -89,6 +89,8 @@ public abstract class Role {
 
     public abstract Skill useSkill(Skill skill);
 
+    public abstract double getCriticalChance();
+
     @Override
     public String toString() {
         return "Role{" +
