@@ -10,7 +10,7 @@ public class Enemy extends Character {
     private int defensePoints;
     private List<Item> loot;
 
-    public Enemy(Long id, String name, Role role, int level, int xpPoints, int healthPoints, int manaPoints, String type, int xpReward, int attackDamage, int defense, List<Item> loot) {
+    public Enemy(int id, String name, Role role, int level, int xpPoints, int healthPoints, int manaPoints, String type, int xpReward, int attackDamage, int defense, List<Item> loot) {
         super(id, name, role, level, xpPoints, healthPoints, manaPoints);
         this.type = type;
         this.xpReward = xpReward;

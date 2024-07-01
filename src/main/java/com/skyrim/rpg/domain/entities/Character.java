@@ -1,7 +1,7 @@
 package com.skyrim.rpg.domain.entities;
 
 public class Character {
-    private Long id;
+    private int id;
     private String name;
     private Role role;
     private int level;
@@ -10,7 +10,7 @@ public class Character {
     private int manaPoints;
 
 
-    public Character(Long id, String name, Role role, int level, int xpPoints, int healthPoints, int manaPoints) {
+    public Character(int id, String name, Role role, int level, int xpPoints, int healthPoints, int manaPoints) {
         this.id = id;
         this.name = name;
         this.role = role;
@@ -18,6 +18,14 @@ public class Character {
         this.xpPoints = xpPoints;
         this.healthPoints = healthPoints;
         this.manaPoints = manaPoints;
+    }
+
+    protected int getId() {
+        return id;
+    }
+
+    protected void setId(int id) {
+        this.id = id;
     }
 
     protected String getName() {
@@ -44,19 +52,12 @@ public class Character {
         this.level = level;
     }
 
-    protected Long getId() {
-        return id;
-    }
 
-    protected void setId(Long id) {
-        this.id = id;
-    }
-
-    public int getXpPoints() {
+    protected int getXpPoints() {
         return xpPoints;
     }
 
-    public void setXpPoints(int xpPoints) {
+    protected void setXpPoints(int xpPoints) {
         this.xpPoints = xpPoints;
     }
 
@@ -74,6 +75,18 @@ public class Character {
 
     protected void setManaPoints(int manaPoints) {
         this.manaPoints = manaPoints;
+    }
+
+    int retrieveLevel() {
+        return this.getLevel();
+    }
+
+    public int getBaseAttack() {
+        return role.getBaseAttack();
+    }
+
+    public int getBaseDefense() {
+        return role.getBaseDefense();
     }
 
     @Override
