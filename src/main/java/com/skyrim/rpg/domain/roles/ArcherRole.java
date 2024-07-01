@@ -22,7 +22,7 @@ public class ArcherRole extends Role {
                 RoleEnum.ARCHER.getBaseAttack(),
                 RoleEnum.ARCHER.getBaseDefense()
         );
-        this.dexterity = dexterity;
+        this.dexterity = 10;
     }
 
     public int getDexterity() {

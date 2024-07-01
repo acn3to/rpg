@@ -22,7 +22,7 @@ public class MageRole extends Role {
                 RoleEnum.MAGE.getBaseAttack(),
                 RoleEnum.MAGE.getBaseDefense()
         );
-        this.intelligence = intelligence;
+        this.intelligence = 10;
     }
 
     public int getIntelligence() {

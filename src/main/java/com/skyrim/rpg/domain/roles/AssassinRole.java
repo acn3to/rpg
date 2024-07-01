@@ -22,7 +22,7 @@ public class AssassinRole extends Role {
                 RoleEnum.ASSASSIN.getBaseAttack(),
                 RoleEnum.ASSASSIN.getBaseDefense()
         );
-        this.agility = agility;
+        this.agility = 10;
     }
 
     public int getAgility() {

@@ -22,7 +22,7 @@ public class WarriorRole extends Role {
                 RoleEnum.WARRIOR.getBaseAttack(),
                 RoleEnum.WARRIOR.getBaseDefense()
         );
-        this.strength = strength;
+        this.strength = 10;
     }
 
     public int getStrength() {
