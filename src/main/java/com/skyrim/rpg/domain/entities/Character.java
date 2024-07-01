@@ -89,6 +89,16 @@ public class Character {
         return role.getBaseDefense();
     }
 
+    public void takeDamage(int damage) {
+        int newHealth = getHealthPoints() - damage;
+        setHealthPoints(Math.max(newHealth, 0));
+    }
+
+    public void heal(int amount) {
+        int newHealth = getHealthPoints() + amount;
+        setHealthPoints(Math.min(newHealth, getHealthPoints()));
+    }
+
     @Override
     public String toString() {
         return "Character{" +
