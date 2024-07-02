@@ -2,26 +2,28 @@ package com.skyrim.rpg.domain.entities;
 
 import com.skyrim.rpg.domain.enums.EffectEnum;
 
+import java.util.UUID;
+
 public class Item {
-    private int id;
+    private String id;
     private String name;
     private String description;
     private int value;
     private EffectEnum effect;
 
-    public Item(int id, String name, String description, int value, EffectEnum effect) {
-        this.id = id;
+    public Item(String name, String description, int value, EffectEnum effect) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.value = value;
         this.effect = effect;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -60,7 +62,7 @@ public class Item {
     @Override
     public String toString() {
         return "Item{" +
-                "id=" + getId() +
+                "id='" + getId() + '\'' +
                 ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", value=" + getValue() +

@@ -1,13 +1,15 @@
 package com.skyrim.rpg.domain.entities;
 
+import com.skyrim.rpg.domain.enums.RoleEnum;
+
 import java.util.List;
 
 public class Enemy extends Character{
     private String type;
     private int xpReward;
 
-    public Enemy(String id, String name, String description, int level, int xpPoints, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints, int intelligencePoints, int manaPoints, int staminaPoints, List<Item> items, List<Skill> skills, String type, int xpReward) {
-        super(id, name, description, level, xpPoints, healthPoints, strengthPoints, defensePoints, agilityPoints, intelligencePoints, manaPoints, staminaPoints, items, skills);
+    public Enemy(String id, String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role, String type, int xpReward) {
+        super(id, name, description, level, xpPoints, items, skills, role);
         this.type = type;
         this.xpReward = xpReward;
     }

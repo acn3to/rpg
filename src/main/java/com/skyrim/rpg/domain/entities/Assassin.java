@@ -1,12 +1,15 @@
 package com.skyrim.rpg.domain.entities;
 
+import com.skyrim.rpg.domain.enums.EffectEnum;
+import com.skyrim.rpg.domain.enums.RoleEnum;
+
 import java.util.List;
 
 public class Assassin extends Character {
     private int poisonDamage;
 
-    public Assassin(String id, String name, String description, int level, int xpPoints, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints, int intelligencePoints, int manaPoints, int staminaPoints, List<Item> items, List<Skill> skills, int poisonDamage) {
-        super(id, name, description, level, xpPoints, healthPoints, strengthPoints, defensePoints, agilityPoints, intelligencePoints, manaPoints, staminaPoints, items, skills);
+    public Assassin(String id, String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role, int poisonDamage) {
+        super(id, name, description, level, xpPoints, items, skills, role);
         this.poisonDamage = poisonDamage;
     }
 
@@ -16,6 +19,20 @@ public class Assassin extends Character {
 
     public void setPoisonDamage(int poisonDamage) {
         this.poisonDamage = poisonDamage;
+    }
+
+    @Override
+    public void addAttributesFromItems() {
+        super.addAttributesFromItems();
+
+        for (Item item : getItems()) {
+            EffectEnum effect = item.getEffect();
+            switch (effect.getEffect()) {
+                case "poisonDamage" -> setPoisonDamage(getPoisonDamage() + (int) effect.getValue());
+                //TODO: Add other effects
+                default -> { }
+            }
+        }
     }
 
     @Override
