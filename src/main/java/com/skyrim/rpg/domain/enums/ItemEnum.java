@@ -42,6 +42,20 @@ public enum ItemEnum {
             "A potent elixir that boosts stamina, allowing for prolonged physical exertion.",
             160,
             EffectEnum.STAMINA_BOOST
+    ),
+    VENOMOUS_DAGGER(
+            7,
+            "Venomous Dagger",
+            "A dagger coated with deadly poison.",
+            170,
+            EffectEnum.POISON_DAMAGE
+    ),
+    STRENGTHENING_POTION(
+            8,
+            "Strengthening Potion",
+            "A potion that enhances physical strength.",
+            190,
+            EffectEnum.STRENGTH_BOOST
     );
 
     private final int id;

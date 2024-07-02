@@ -10,7 +10,7 @@ public enum EffectEnum {
     MANA_REGEN(
             "Mana Regeneration",
             "Regenerates mana by 5 points per round",
-            "manaPoints",
+            "manaRegenRate",
             5
     ),
     CRITICAL_HIT_BOOST(
@@ -40,7 +40,7 @@ public enum EffectEnum {
     INTELLECT_BOOST(
             "Intellect Boost",
             "Increases intellect points by 4",
-            "intellectPoints",
+            "intelligencePoints",
             4
     ),
     STAMINA_BOOST(
@@ -48,6 +48,18 @@ public enum EffectEnum {
             "Increases stamina points by 8",
             "staminaPoints",
             8
+    ),
+    POISON_DAMAGE(
+            "Poison Damage",
+            "Applies poison damage of 20 per round",
+            "poisonDamage",
+            20
+    ),
+    STRENGTH_BOOST(
+            "Strength Boost",
+            "Increases strength points by 7",
+            "strengthPoints",
+            7
     );
 
     private final String name;

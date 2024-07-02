@@ -1,5 +1,7 @@
 package com.skyrim.rpg.domain.enums;
 
+import java.util.List;
+
 public enum RoleEnum {
     WARRIOR(
             "Warrior",
@@ -10,7 +12,8 @@ public enum RoleEnum {
             5,
             5,
             10,
-            8
+            8,
+            List.of(SkillEnum.THUNDEROUS_BLOW)
     ),
     MAGE(
             "Mage",
@@ -21,7 +24,8 @@ public enum RoleEnum {
             4,
             15,
             15,
-            6
+            6,
+            List.of(SkillEnum.GLACIAL_SPIKE)
     ),
     ARCHER(
             "Archer",
@@ -32,7 +36,8 @@ public enum RoleEnum {
             12,
             7,
             8,
-            7
+            7,
+            List.of(SkillEnum.PRECISION_SHOT)
     ),
     ASSASSIN(
             "Assassin",
@@ -43,7 +48,8 @@ public enum RoleEnum {
             10,
             6,
             7,
-            10
+            10,
+            List.of(SkillEnum.VENOMOUS_STRIKE)
     );
 
     private final String roleName;
@@ -55,8 +61,9 @@ public enum RoleEnum {
     private final int intelligencePoints;
     private final int manaPoints;
     private final int staminaPoints;
+    private final List<SkillEnum> defaultSkills;
 
-    RoleEnum(String roleName, String description, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints, int intelligencePoints, int manaPoints, int staminaPoints) {
+    RoleEnum(String roleName, String description, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints, int intelligencePoints, int manaPoints, int staminaPoints, List<SkillEnum> defaultSkills) {
         this.roleName = roleName;
         this.description = description;
         this.healthPoints = healthPoints;
@@ -66,6 +73,7 @@ public enum RoleEnum {
         this.intelligencePoints = intelligencePoints;
         this.manaPoints = manaPoints;
         this.staminaPoints = staminaPoints;
+        this.defaultSkills = defaultSkills;
     }
 
     public String getRoleName() {
@@ -104,18 +112,23 @@ public enum RoleEnum {
         return staminaPoints;
     }
 
+    public List<SkillEnum> getDefaultSkills() {
+        return defaultSkills;
+    }
+
     @Override
     public String toString() {
         return "RoleEnum{" +
-                "roleName='" + getRoleName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", healthPoints=" + getHealthPoints() +
-                ", strengthPoints=" + getStrengthPoints() +
-                ", defensePoints=" + getDefensePoints() +
-                ", agilityPoints=" + getAgilityPoints() +
-                ", intelligencePoints=" + getIntelligencePoints() +
-                ", manaPoints=" + getManaPoints() +
-                ", staminaPoints=" + getStaminaPoints() +
+                "roleName='" + roleName + '\'' +
+                ", description='" + description + '\'' +
+                ", healthPoints=" + healthPoints +
+                ", strengthPoints=" + strengthPoints +
+                ", defensePoints=" + defensePoints +
+                ", agilityPoints=" + agilityPoints +
+                ", intelligencePoints=" + intelligencePoints +
+                ", manaPoints=" + manaPoints +
+                ", staminaPoints=" + staminaPoints +
+                ", defaultSkills=" + defaultSkills +
                 '}';
     }
 }
