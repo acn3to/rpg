@@ -5,16 +5,14 @@ public class Skill {
     private String name;
     private String type;
     private String description;
-    private int manaCost;
-    private int power;
+    public int baseDamage;
 
-    public Skill(int id, String name, String type, String description, int manaCost, int power) {
+    public Skill(int id, String name, String type, String description, int baseDamage) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
-        this.manaCost = manaCost;
-        this.power = power;
+        this.baseDamage = baseDamage;
     }
 
     public int getId() {
@@ -49,20 +47,12 @@ public class Skill {
         this.description = description;
     }
 
-    public int getManaCost() {
-        return manaCost;
+    public int getBaseDamage() {
+        return baseDamage;
     }
 
-    public void setManaCost(int manaCost) {
-        this.manaCost = manaCost;
-    }
-
-    public int getPower() {
-        return power;
-    }
-
-    public void setPower(int power) {
-        this.power = power;
+    public void setBaseDamage(int baseDamage) {
+        this.baseDamage = baseDamage;
     }
 
     @Override
@@ -72,8 +62,7 @@ public class Skill {
                 ", name='" + getName() + '\'' +
                 ", type='" + getType() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", manaCost=" + getManaCost() +
-                ", power=" + getPower() +
+                ", baseDamage=" + getBaseDamage() +
                 '}';
     }
 }

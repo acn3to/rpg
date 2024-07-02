@@ -1,30 +1,73 @@
 package com.skyrim.rpg.domain.entities;
 
+import com.skyrim.rpg.domain.enums.EffectEnum;
+
+import java.util.List;
+
 public class Character {
-    private int id;
+    private String id;
     private String name;
-    private Role role;
+    private String description;
     private int level;
     private int xpPoints;
     private int healthPoints;
+    private int strengthPoints;
+    private int defensePoints;
+    private int agilityPoints;
+    private int intelligencePoints;
     private int manaPoints;
+    private int staminaPoints;
+    private List<Item> items;
+    private List<Skill> skills;
 
-
-    public Character(int id, String name, Role role, int level, int xpPoints, int healthPoints, int manaPoints) {
+    public Character(String id, String name, String description, int level, int xpPoints, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints, int intelligencePoints, int manaPoints, int staminaPoints, List<Item> items, List<Skill> skills) {
         this.id = id;
         this.name = name;
-        this.role = role;
+        this.description = description;
         this.level = level;
         this.xpPoints = xpPoints;
         this.healthPoints = healthPoints;
+        this.strengthPoints = strengthPoints;
+        this.defensePoints = defensePoints;
+        this.agilityPoints = agilityPoints;
+        this.intelligencePoints = intelligencePoints;
         this.manaPoints = manaPoints;
+        this.staminaPoints = staminaPoints;
+        this.items = items;
+        this.skills = skills;
+        addAttributesFromItems();
     }
 
-    protected int getId() {
+    protected void addAttributesFromItems() {
+        for (Item item : items) {
+            EffectEnum effect = item.getEffect();
+            switch (effect) {
+                case AGILITY_BOOST:
+                    agilityPoints += effect.getValue();
+                    break;
+                case DEFENSE_BOOST:
+                    defensePoints += effect.getValue();
+                    break;
+                case INTELLECT_BOOST:
+                    intelligencePoints += effect.getValue();
+                    break;
+                case STAMINA_BOOST:
+                    staminaPoints += effect.getValue();
+                    break;
+                case MANA_REGEN:
+                    manaPoints += effect.getValue();
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    protected String getId() {
         return id;
     }
 
-    protected void setId(int id) {
+    protected void setId(String id) {
         this.id = id;
     }
 
@@ -36,12 +79,12 @@ public class Character {
         this.name = name;
     }
 
-    protected Role getRole() {
-        return role;
+    protected String getDescription() {
+        return description;
     }
 
-    protected void setRole(Role role) {
-        this.role = role;
+    protected void setDescription(String description) {
+        this.description = description;
     }
 
     protected int getLevel() {
@@ -51,7 +94,6 @@ public class Character {
     protected void setLevel(int level) {
         this.level = level;
     }
-
 
     protected int getXpPoints() {
         return xpPoints;
@@ -69,6 +111,38 @@ public class Character {
         this.healthPoints = healthPoints;
     }
 
+    protected int getStrengthPoints() {
+        return strengthPoints;
+    }
+
+    protected void setStrengthPoints(int strengthPoints) {
+        this.strengthPoints = strengthPoints;
+    }
+
+    protected int getDefensePoints() {
+        return defensePoints;
+    }
+
+    protected void setDefensePoints(int defensePoints) {
+        this.defensePoints = defensePoints;
+    }
+
+    protected int getAgilityPoints() {
+        return agilityPoints;
+    }
+
+    protected void setAgilityPoints(int agilityPoints) {
+        this.agilityPoints = agilityPoints;
+    }
+
+    protected int getIntelligencePoints() {
+        return intelligencePoints;
+    }
+
+    protected void setIntelligencePoints(int intelligencePoints) {
+        this.intelligencePoints = intelligencePoints;
+    }
+
     protected int getManaPoints() {
         return manaPoints;
     }
@@ -77,38 +151,46 @@ public class Character {
         this.manaPoints = manaPoints;
     }
 
-    int retrieveLevel() {
-        return this.getLevel();
+    protected int getStaminaPoints() {
+        return staminaPoints;
     }
 
-    public int getBaseAttack() {
-        return role.getBaseAttack();
+    protected void setStaminaPoints(int staminaPoints) {
+        this.staminaPoints = staminaPoints;
     }
 
-    public int getBaseDefense() {
-        return role.getBaseDefense();
+    protected List<Item> getItems() {
+        return items;
     }
 
-    public void takeDamage(int damage) {
-        int newHealth = getHealthPoints() - damage;
-        setHealthPoints(Math.max(newHealth, 0));
+    protected void setItems(List<Item> items) {
+        this.items = items;
     }
 
-    public void heal(int amount) {
-        int newHealth = getHealthPoints() + amount;
-        setHealthPoints(Math.min(newHealth, getHealthPoints()));
+    protected List<Skill> getSkills() {
+        return skills;
+    }
+
+    protected void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
 
     @Override
     public String toString() {
         return "Character{" +
-                "id=" + getId() +
+                "id='" + getId() + '\'' +
                 ", name='" + getName() + '\'' +
-                ", role=" + getRole() +
                 ", level=" + getLevel() +
                 ", xpPoints=" + getXpPoints() +
                 ", healthPoints=" + getHealthPoints() +
+                ", strengthPoints=" + getStrengthPoints() +
+                ", defensePoints=" + getDefensePoints() +
+                ", agilityPoints=" + getAgilityPoints() +
+                ", intelligencePoints=" + getIntelligencePoints() +
                 ", manaPoints=" + getManaPoints() +
+                ", staminaPoints=" + getStaminaPoints() +
+                ", items=" + getItems() +
+                ", skills=" + getSkills() +
                 '}';
     }
 }

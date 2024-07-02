@@ -1,131 +1,121 @@
 package com.skyrim.rpg.domain.enums;
 
-import com.skyrim.rpg.domain.entities.Skill;
-
-import java.util.List;
-
 public enum RoleEnum {
-    ARCHER(
-            1,
-            "Archer",
-            "In the sprawling forests of Falkreath and the mist-shrouded marshes of Morthal, Archers in Skyrim are revered for their mastery of ranged combat. With bows crafted from the finest materials found in Solitude's workshops, they strike with lethal precision from the shadows. Skilled in the art of stealth and evasion, these hunters roam Skyrim's wilds.",
-            List.of(new Skill(
-                    SkillEnum.PRECISION_SHOT.getId(),
-                    SkillEnum.PRECISION_SHOT.getName(),
-                    SkillEnum.PRECISION_SHOT.getType(),
-                    SkillEnum.PRECISION_SHOT.getDescription(),
-                    SkillEnum.PRECISION_SHOT.getManaCost(),
-                    SkillEnum.PRECISION_SHOT.getPower()
-            )),
-            50,
-            25,
-            13,
-            9
-    ),
-
     WARRIOR(
-            2,
             "Warrior",
-            "On the battlefields of Whiterun's plains and amidst the ancient ruins of Markarth, Skyrim's Warriors are celebrated for their prowess in close combat. Clad in armor forged by Riften's finest smiths, they fearlessly charge into the fray, wielding swords honed in Solitude's fires to defend Skyrim's honor and safeguard its people.",
-            List.of(new Skill(
-                    SkillEnum.THUNDEROUS_BLOW.getId(),
-                    SkillEnum.THUNDEROUS_BLOW.getName(),
-                    SkillEnum.THUNDEROUS_BLOW.getType(),
-                    SkillEnum.THUNDEROUS_BLOW.getDescription(),
-                    SkillEnum.THUNDEROUS_BLOW.getManaCost(),
-                    SkillEnum.THUNDEROUS_BLOW.getPower()
-            )),
-            80,
+            "A strong and resilient fighter, skilled in melee combat.",
+            100,
+            12,
             10,
-            20,
-            15
+            5,
+            5,
+            10,
+            8
     ),
-
     MAGE(
-            3,
             "Mage",
-            "Within the ancient halls of Winterhold's College and the mystical libraries of its towers, Skyrim's Mages harness the arcane arts with unparalleled expertise. Conjuring storms over Solitude's seas and unraveling mysteries in Whiterun's arcane sanctums, they delve into the depths of Skyrim's magic, seeking to unlock its secrets and shape its future.",
-            List.of(new Skill(
-                    SkillEnum.GLACIAL_SPIKE.getId(),
-                    SkillEnum.GLACIAL_SPIKE.getName(),
-                    SkillEnum.GLACIAL_SPIKE.getType(),
-                    SkillEnum.GLACIAL_SPIKE.getDescription(),
-                    SkillEnum.GLACIAL_SPIKE.getManaCost(),
-                    SkillEnum.GLACIAL_SPIKE.getPower()
-            )),
-            60,
-            50,
-            18,
+            "A master of the arcane arts, capable of powerful spells.",
+            80,
+            5,
+            6,
+            4,
+            15,
+            15,
+            6
+    ),
+    ARCHER(
+            "Archer",
+            "A ranged combatant with exceptional accuracy and agility.",
+            90,
+            8,
+            8,
+            12,
+            7,
+            8,
             7
     ),
-
     ASSASSIN(
-            4,
             "Assassin",
-            "Within the shadowy sanctuaries of Riften's Thieves Guild and the hidden lairs of Skyrim's wilderness, Assassins of the Dark Brotherhood operate unseen and deadly. Trained in the arts of stealth and assassination from Windhelm to Falkreath, they strike fear into their targets' hearts, fulfilling contracts under the guidance of the Night Mother's whispers and the dark auspices of Sithis.",
-            List.of(new Skill(
-                    SkillEnum.PRECISION_SHOT.getId(),
-                    SkillEnum.VENOMOUS_STRIKE.getName(),
-                    SkillEnum.VENOMOUS_STRIKE.getType(),
-                    SkillEnum.VENOMOUS_STRIKE.getDescription(),
-                    SkillEnum.VENOMOUS_STRIKE.getManaCost(),
-                    SkillEnum.VENOMOUS_STRIKE.getPower()
-            )),
-            40,
-            30,
-            15,
+            "A stealthy killer who excels in dealing poison damage.",
+            85,
+            10,
+            7,
+            10,
+            6,
+            7,
             10
     );
 
-    private final int id;
-    private final String name;
+    private final String roleName;
     private final String description;
-    private final List<Skill> skills;
-    private final int baseHealth;
-    private final int baseMana;
-    private final int baseAttack;
-    private final int baseDefense;
+    private final int healthPoints;
+    private final int strengthPoints;
+    private final int defensePoints;
+    private final int agilityPoints;
+    private final int intelligencePoints;
+    private final int manaPoints;
+    private final int staminaPoints;
 
-    RoleEnum(int roleId, String roleName, String description, List<Skill> skills, int baseHealth, int baseMana, int baseAttack, int baseDefense) {
-        this.id = roleId;
-        this.name = roleName;
+    RoleEnum(String roleName, String description, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints, int intelligencePoints, int manaPoints, int staminaPoints) {
+        this.roleName = roleName;
         this.description = description;
-        this.skills = skills;
-        this.baseHealth = baseHealth;
-        this.baseMana = baseMana;
-        this.baseAttack = baseAttack;
-        this.baseDefense = baseDefense;
+        this.healthPoints = healthPoints;
+        this.strengthPoints = strengthPoints;
+        this.defensePoints = defensePoints;
+        this.agilityPoints = agilityPoints;
+        this.intelligencePoints = intelligencePoints;
+        this.manaPoints = manaPoints;
+        this.staminaPoints = staminaPoints;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
+    public String getRoleName() {
+        return roleName;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public List<Skill> getSkills() {
-        return skills;
+    public int getHealthPoints() {
+        return healthPoints;
     }
 
-    public int getBaseHealth() {
-        return baseHealth;
+    public int getStrengthPoints() {
+        return strengthPoints;
     }
 
-    public int getBaseMana() {
-        return baseMana;
+    public int getDefensePoints() {
+        return defensePoints;
     }
 
-    public int getBaseAttack() {
-        return baseAttack;
+    public int getAgilityPoints() {
+        return agilityPoints;
     }
 
-    public int getBaseDefense() {
-        return baseDefense;
+    public int getIntelligencePoints() {
+        return intelligencePoints;
+    }
+
+    public int getManaPoints() {
+        return manaPoints;
+    }
+
+    public int getStaminaPoints() {
+        return staminaPoints;
+    }
+
+    @Override
+    public String toString() {
+        return "RoleEnum{" +
+                "roleName='" + getRoleName() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", healthPoints=" + getHealthPoints() +
+                ", strengthPoints=" + getStrengthPoints() +
+                ", defensePoints=" + getDefensePoints() +
+                ", agilityPoints=" + getAgilityPoints() +
+                ", intelligencePoints=" + getIntelligencePoints() +
+                ", manaPoints=" + getManaPoints() +
+                ", staminaPoints=" + getStaminaPoints() +
+                '}';
     }
 }

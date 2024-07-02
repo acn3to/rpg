@@ -1,21 +1,20 @@
 package com.skyrim.rpg.domain.entities;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.skyrim.rpg.domain.enums.EffectEnum;
 
 public class Item {
     private int id;
     private String name;
     private String description;
     private int value;
-    private List<String> effects;
+    private EffectEnum effect;
 
-    public Item(int id, String name, String description, int value, List<String> effects) {
+    public Item(int id, String name, String description, int value, EffectEnum effect) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.value = value;
-        this.effects = effects;
+        this.effect = effect;
     }
 
     public int getId() {
@@ -50,12 +49,12 @@ public class Item {
         this.value = value;
     }
 
-    public List<String> getEffects() {
-        return effects;
+    public EffectEnum getEffect() {
+        return effect;
     }
 
-    public void setEffects(List<String> effects) {
-        this.effects = effects;
+    public void setEffect(EffectEnum effect) {
+        this.effect = effect;
     }
 
     @Override
@@ -65,7 +64,7 @@ public class Item {
                 ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", value=" + getValue() +
-                ", effects=" + getEffects() +
+                ", effect=" + getEffect() +
                 '}';
     }
 }

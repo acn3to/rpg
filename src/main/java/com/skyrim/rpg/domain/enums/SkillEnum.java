@@ -6,48 +6,42 @@ public enum SkillEnum {
             "Precision Shot",
             "Normal",
             "A focused, high-precision arrow shot that targets a specific weak point, dealing critical damage to a single enemy.",
-            15,
-            20
+            15
     ),
     THUNDEROUS_BLOW(
             2,
             "Thunderous Blow",
             "Normal",
             "Unleashes a powerful overhead strike, causing significant damage and possibly staggering the enemy.",
-            20,
-            25
+            20
     ),
     GLACIAL_SPIKE(
             3,
             "Glacial Spike",
             "Ice",
             "Summons a spike of ice from the ground to impale and freeze enemies, dealing cold damage and immobilizing them briefly.",
-            25,
-            30
+            25
     ),
     VENOMOUS_STRIKE(
             4,
             "Venomous Strike",
             "Poison",
             "Coats the assassin's weapon with a deadly poison that causes ongoing damage to the target over time, weakening them with each strike.",
-            18,
-            15
+            18
     );
 
     private final int id;
     private final String name;
     private final String type;
     private final String description;
-    private final int manaCost;
-    private final int power;
+    private final int baseDamage;
 
-    SkillEnum(int id, String name, String type, String description, int manaCost, int power) {
+    SkillEnum(int id, String name, String type, String description, int baseDamage) {
         this.id = id;
         this.name = name;
         this.type = type;
         this.description = description;
-        this.manaCost = manaCost;
-        this.power = power;
+        this.baseDamage = baseDamage;
     }
 
     public int getId() {
@@ -66,11 +60,18 @@ public enum SkillEnum {
         return description;
     }
 
-    public int getManaCost() {
-        return manaCost;
+    public int getBaseDamage() {
+        return baseDamage;
     }
 
-    public int getPower() {
-        return power;
+    @Override
+    public String toString() {
+        return "SkillEnum{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", type='" + getType() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", baseDamage=" + getBaseDamage() +
+                '}';
     }
 }
