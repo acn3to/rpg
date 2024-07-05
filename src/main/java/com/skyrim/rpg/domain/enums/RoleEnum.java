@@ -3,17 +3,35 @@ package com.skyrim.rpg.domain.enums;
 import java.util.List;
 
 public enum RoleEnum {
+    DEFAULT_ROLE(
+            "Default Role",
+            "Generic role for characters",
+            70,
+            8,
+            6,
+            8,
+            8,
+            10,
+            7,
+            List.of(SkillEnum.BASIC_ATTACK),
+            null,
+            StatusEnum.NORMAL,
+            "Default"
+    ),
     WARRIOR(
             "Warrior",
             "A strong and resilient fighter, skilled in melee combat.",
             100,
             12,
-            10,
+            12,
             5,
             5,
             10,
             8,
-            List.of(SkillEnum.THUNDEROUS_BLOW)
+            List.of(SkillEnum.THUNDEROUS_BLOW),
+            null,
+            null,
+            null
     ),
     MAGE(
             "Mage",
@@ -25,7 +43,10 @@ public enum RoleEnum {
             15,
             15,
             6,
-            List.of(SkillEnum.GLACIAL_SPIKE)
+            List.of(SkillEnum.GLACIAL_SPIKE),
+            null,
+            null,
+            null
     ),
     ARCHER(
             "Archer",
@@ -33,11 +54,14 @@ public enum RoleEnum {
             90,
             8,
             8,
-            12,
+            10,
             7,
             8,
             7,
-            List.of(SkillEnum.PRECISION_SHOT)
+            List.of(SkillEnum.PRECISION_SHOT),
+            null,
+            null,
+            null
     ),
     ASSASSIN(
             "Assassin",
@@ -45,11 +69,59 @@ public enum RoleEnum {
             85,
             10,
             7,
-            10,
+            8,
             6,
             7,
             10,
-            List.of(SkillEnum.VENOMOUS_STRIKE)
+            List.of(SkillEnum.VENOMOUS_STRIKE),
+            null,
+            null,
+            null
+    ),
+    ENEMY_DRAGON(
+            "Dragon",
+            "Fire-breathing dragon",
+            200,
+            20,
+            15,
+            10,
+            15,
+            20,
+            15,
+            List.of(),
+            500,
+            StatusEnum.BOSS,
+            "Dragon"
+    ),
+    ENEMY_GOBLIN(
+            "Goblin",
+            "Small, sneaky creature",
+            50,
+            8,
+            5,
+            6,
+            4,
+            0,
+            8,
+            List.of(),
+            25,
+            StatusEnum.NORMAL,
+            "Goblin"
+    ),
+    ENEMY_SKELETON(
+            "Skeleton",
+            "Undead warrior",
+            30,
+            10,
+            3,
+            5,
+            2,
+            0,
+            5,
+            List.of(),
+            20,
+            StatusEnum.NORMAL,
+            "Skeleton"
     );
 
     private final String roleName;
@@ -62,8 +134,12 @@ public enum RoleEnum {
     private final int manaPoints;
     private final int staminaPoints;
     private final List<SkillEnum> defaultSkills;
+    private final Integer xpReward;
+    private final StatusEnum status;
+    private final String type;
 
-    RoleEnum(String roleName, String description, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints, int intelligencePoints, int manaPoints, int staminaPoints, List<SkillEnum> defaultSkills) {
+    RoleEnum(String roleName, String description, int healthPoints, int strengthPoints, int defensePoints, int agilityPoints,
+             int intelligencePoints, int manaPoints, int staminaPoints, List<SkillEnum> defaultSkills, Integer xpReward, StatusEnum status, String type) {
         this.roleName = roleName;
         this.description = description;
         this.healthPoints = healthPoints;
@@ -74,6 +150,9 @@ public enum RoleEnum {
         this.manaPoints = manaPoints;
         this.staminaPoints = staminaPoints;
         this.defaultSkills = defaultSkills;
+        this.xpReward = xpReward;
+        this.status = status;
+        this.type = type;
     }
 
     public String getRoleName() {
@@ -116,6 +195,18 @@ public enum RoleEnum {
         return defaultSkills;
     }
 
+    public Integer getXpReward() {
+        return xpReward;
+    }
+
+    public StatusEnum getStatus() {
+        return status;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     @Override
     public String toString() {
         return "RoleEnum{" +
@@ -128,7 +219,10 @@ public enum RoleEnum {
                 ", intelligencePoints=" + intelligencePoints +
                 ", manaPoints=" + manaPoints +
                 ", staminaPoints=" + staminaPoints +
-                ", defaultSkills=" + defaultSkills +
+                ", defaultSkills=" + (defaultSkills != null ? defaultSkills : "None") +
+                ", xpReward=" + (xpReward != null ? xpReward : "N/A") +
+                ", status=" + (status != null ? status : "N/A") +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

@@ -1,7 +1,5 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.EffectEnum;
-
 import java.util.UUID;
 
 public class Item {
@@ -9,14 +7,18 @@ public class Item {
     private String name;
     private String description;
     private int value;
-    private EffectEnum effect;
+    private String effect;
+    private String effectDescription;
+    private int effectBuff;
 
-    public Item(String name, String description, int value, EffectEnum effect) {
+    public Item(String name, String description, int value, String effect, String effectDescription, int effectBuff) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.value = value;
         this.effect = effect;
+        this.effectDescription = effectDescription;
+        this.effectBuff = effectBuff;
     }
 
     public String getId() {
@@ -51,12 +53,28 @@ public class Item {
         this.value = value;
     }
 
-    public EffectEnum getEffect() {
+    public String getEffect() {
         return effect;
     }
 
-    public void setEffect(EffectEnum effect) {
+    public void setEffect(String effect) {
         this.effect = effect;
+    }
+
+    public String getEffectDescription() {
+        return effectDescription;
+    }
+
+    public void setEffectDescription(String effectDescription) {
+        this.effectDescription = effectDescription;
+    }
+
+    public int getEffectBuff() {
+        return effectBuff;
+    }
+
+    public void setEffectBuff(int effectBuff) {
+        this.effectBuff = effectBuff;
     }
 
     @Override
@@ -66,7 +84,9 @@ public class Item {
                 ", name='" + getName() + '\'' +
                 ", description='" + getDescription() + '\'' +
                 ", value=" + getValue() +
-                ", effect=" + getEffect() +
+                ", effect='" + getEffect() + '\'' +
+                ", effectDescription='" + getDescription() + '\'' +
+                ", effectBuff=" + getEffectBuff() +
                 '}';
     }
 }

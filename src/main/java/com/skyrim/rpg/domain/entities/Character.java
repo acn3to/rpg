@@ -1,14 +1,14 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.EffectEnum;
 import com.skyrim.rpg.domain.enums.RoleEnum;
 import com.skyrim.rpg.domain.enums.SkillEnum;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-public class Character {
-    private String id;
+public abstract class Character {
+    private final String id;
     private String name;
     private String description;
     private int level;
@@ -24,8 +24,8 @@ public class Character {
     private List<Skill> skills;
     private RoleEnum role;
 
-    public Character(String id, String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role) {
-        this.id = id;
+    public Character(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role) {
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.level = level;
@@ -33,58 +33,84 @@ public class Character {
         this.items = items != null ? items : new ArrayList<>();
         this.skills = skills != null ? skills : new ArrayList<>();
         this.role = role;
-        createDefault();
+        initializeRoleAttributes();
+        addDefaultSkills();
+        addAttributesFromItems();
     }
 
-    protected void createDefault() {
-        healthPoints = role.getHealthPoints();
-        strengthPoints = role.getStrengthPoints();
-        defensePoints = role.getDefensePoints();
-        agilityPoints = role.getAgilityPoints();
-        intelligencePoints = role.getIntelligencePoints();
-        manaPoints = role.getManaPoints();
-        staminaPoints = role.getStaminaPoints();
-        addDefaultSkills(role);
-    }
-
-    private void addDefaultSkills(RoleEnum roleEnum) {
-        for (SkillEnum skillEnum : roleEnum.getDefaultSkills()) {
-            skills.add(createSkill(skillEnum));
+    protected void initializeRoleAttributes() {
+        RoleEnum role = getRole();
+        if (role != null) {
+            this.healthPoints = role.getHealthPoints();
+            this.strengthPoints = role.getStrengthPoints();
+            this.defensePoints = role.getDefensePoints();
+            this.agilityPoints = role.getAgilityPoints();
+            this.intelligencePoints = role.getIntelligencePoints();
+            this.manaPoints = role.getManaPoints();
+            this.staminaPoints = role.getStaminaPoints();
         }
     }
 
-    private Skill createSkill(SkillEnum skillEnum) {
-        return new Skill(skillEnum.getId(), skillEnum.getName(), skillEnum.getType(), skillEnum.getDescription(), skillEnum.getBaseDamage());
-    }
-
-    public void addItem(Item item) {
-        if (items == null) {
-            items = new ArrayList<>();
+    protected void addDefaultSkills() {
+        for (SkillEnum skillEnum : role.getDefaultSkills()) {
+            skills.add(new Skill(
+                    skillEnum.getId(),
+                    skillEnum.getName(),
+                    skillEnum.getType(),
+                    skillEnum.getDescription(),
+                    skillEnum.getBaseDamage()
+            ));
         }
-        items.add(item);
     }
 
-    public void addAttributesFromItems() {
+    protected void addAttributesFromItems() {
         for (Item item : items) {
-            EffectEnum effect = item.getEffect();
-            switch (effect.getEffect()) {
-                case "manaPoints" -> manaPoints += effect.getValue();
-                case "healthPoints" -> healthPoints += effect.getValue();
-                case "agilityPoints" -> agilityPoints += effect.getValue();
-                case "defensePoints" -> defensePoints += effect.getValue();
-                case "staminaPoints" -> staminaPoints += effect.getValue();
-                case "intelligencePoints" -> intelligencePoints += effect.getValue();
-                default -> { }
+            String effect = item.getEffect();
+            int effectBuff = (int) item.getEffectBuff();
+
+            switch (effect) {
+                case "Health Points":
+                    healthPoints += effectBuff;
+                    break;
+                case "Strength Points":
+                    strengthPoints += effectBuff;
+                    break;
+                case "Defense Points":
+                    defensePoints += effectBuff;
+                    break;
+                case "Agility Points":
+                    agilityPoints += effectBuff;
+                    break;
+                case "Intelligence Points":
+                    intelligencePoints += effectBuff;
+                    break;
+                case "Mana Points":
+                    manaPoints += effectBuff;
+                    break;
+                case "Stamina Points":
+                    staminaPoints += effectBuff;
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    public String getId() {
-        return id;
+    protected void addItem(Item item) {
+        if (item != null) {
+            items.add(item);
+            addAttributesFromItems();
+        }
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public abstract int calculateAttackDamage();
+
+    public abstract int calculateSkillDamage(SkillEnum skill);
+
+    public abstract double calculateCriticalChance();
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -211,7 +237,7 @@ public class Character {
                 ", strengthPoints=" + getStrengthPoints() +
                 ", defensePoints=" + getDefensePoints() +
                 ", agilityPoints=" + getAgilityPoints() +
-                ", intelligencePoints=" + getIntelligencePoints() +
+                ", intelligencePoints=" + getAgilityPoints() +
                 ", manaPoints=" + getManaPoints() +
                 ", staminaPoints=" + getStaminaPoints() +
                 ", items=" + getItems() +

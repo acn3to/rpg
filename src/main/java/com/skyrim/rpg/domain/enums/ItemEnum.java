@@ -1,94 +1,103 @@
 package com.skyrim.rpg.domain.enums;
 
+import com.skyrim.rpg.domain.entities.Item;
+
 public enum ItemEnum {
-    DAGGER_OF_NIGHT_MOTHER(
-            1,
-            "Dagger of Night Mother",
-            "A deadly dagger with the blessing of the Night Mother.",
-            150,
-            EffectEnum.AGILITY_BOOST
+    SWORD_OF_TALOS(
+            new Item(
+                    "Sword of Talos",
+                    "A legendary sword said to have been wielded by Talos himself, granting its bearer great strength and courage.",
+                    150,
+                    "Critical Hit Chance",
+                    "Increases critical hit chance by 1",
+                    1
+            )
     ),
-    STAFF_OF_MANA_REGENERATION(
-            2,
-            "Staff of Mana Regeneration",
-            "A magical staff that regenerates mana over time.",
-            200,
-            EffectEnum.MANA_REGEN
+    STAFF_OF_MAGNUS(
+            new Item(
+                    "Staff of Magnus",
+                    "An ancient staff imbued with the power to absorb and control magical energies.",
+                    200,
+                    "Mana Regeneration",
+                    "Increase mana regeneration by 10 points",
+                    10
+            )
     ),
-    BATTLE_AXE_OF_RAGE(
-            3,
-            "Battle Axe of Rage",
-            "An axe that fuels rage in battle.",
-            180,
-            EffectEnum.RAGE_BOOST
+    WARHAMMER_OF_YSMIR(
+            new Item(
+                    "Warhammer of Ysmir",
+                    "A massive warhammer believed to have been used by Ysmir Wulfharth in battles against dragons and giants.",
+                    180,
+                    "Rage Points",
+                    "Increase rage by 10 points",
+                    10
+            )
     ),
-    RING_OF_DEFENSE(
-            4,
-            "Ring of Defense",
-            "A sturdy ring that enhances defense against attacks.",
-            120,
-            EffectEnum.DEFENSE_BOOST
+    SHIELD_OF_SHOR(
+            new Item(
+                    "Shield of Shor",
+                    "A sturdy shield that invokes the protection of Shor, granting its bearer enhanced defense against all foes.",
+                    120,
+                    "Defense Points",
+                    "Increases defense by 5 points",
+                    5
+            )
     ),
-    AMULET_OF_INTELLECT(
-            5,
-            "Amulet of Intellect",
-            "An enchanted amulet that enhances intelligence and spellcasting.",
-            220,
-            EffectEnum.INTELLECT_BOOST
+    AMULET_OF_KYNARETH(
+            new Item(
+                    "Amulet of Kynareth",
+                    "An enchanted amulet that channels the blessings of Kynareth, enhancing intelligence and spellcasting abilities.",
+                    220,
+                    "Intelligence Points",
+                    "Increases intelligence by 5 points",
+                    5
+            )
     ),
-    ELIXIR_OF_STAMINA(
-            6,
-            "Elixir of Stamina",
-            "A potent elixir that boosts stamina, allowing for prolonged physical exertion.",
-            160,
-            EffectEnum.STAMINA_BOOST
+    ELIXIR_OF_KYNE(
+            new Item(
+                    "Elixir of Kyne",
+                    "A sacred elixir brewed from the herbs blessed by Kyne herself, granting its drinker unmatched stamina and endurance.",
+                    160,
+                    "Stamina Points",
+                    "Increases stamina by 10 points",
+                    10
+            )
     ),
-    VENOMOUS_DAGGER(
-            7,
-            "Venomous Dagger",
-            "A dagger coated with deadly poison.",
-            170,
-            EffectEnum.POISON_DAMAGE
+    DAGGER_OF_SITHIS(
+            new Item(
+                    "Dagger of Sithis",
+                    "A dark dagger believed to be connected to the mysterious cult of Sithis, coated with a deadly poison.",
+                    170,
+                    "Poison Damage",
+                    "Increase poison damage by 9 points",
+                    9
+            )
     ),
-    STRENGTHENING_POTION(
-            8,
-            "Strengthening Potion",
-            "A potion that enhances physical strength.",
-            190,
-            EffectEnum.STRENGTH_BOOST
+    POTION_OF_THE_DIVINES(
+            new Item(
+                    "Potion of the Divines",
+                    "A divine potion crafted by the gods themselves, enhancing the physical strength of its drinker.",
+                    190,
+                    "Strength Points",
+                    "Increases strength by 5 points",
+                    5
+            )
     );
 
-    private final int id;
-    private final String name;
-    private final String description;
-    private final int value;
-    private final EffectEnum effect;
+    private final Item item;
 
-    ItemEnum(int id, String name, String description, int value, EffectEnum effect) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.value = value;
-        this.effect = effect;
+    ItemEnum(Item item) {
+        this.item = item;
     }
 
-    public int getId() {
-        return id;
+    public Item getItem() {
+        return item;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public int getValue() {
-        return value;
-    }
-
-    public EffectEnum getEffect() {
-        return effect;
+    @Override
+    public String toString() {
+        return "ItemEnum{" +
+                "item=" + getItem() +
+                '}';
     }
 }

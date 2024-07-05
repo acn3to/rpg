@@ -10,5 +10,4 @@ class RpgApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

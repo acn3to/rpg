@@ -1,6 +1,6 @@
 package com.skyrim.rpg.application.dto;
 
-public class CharacterRequest {
+public class UpdateCharacterDTO {
     private String name;
     private String description;
     private String roleName;

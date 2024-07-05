@@ -1,13 +1,13 @@
 package com.skyrim.rpg.domain.entities;
 
 public class Skill {
-    private int id;
+    private String id;
     private String name;
     private String type;
     private String description;
-    public int baseDamage;
+    private int baseDamage;
 
-    public Skill(int id, String name, String type, String description, int baseDamage) {
+    public Skill(String id, String name, String type, String description, int baseDamage) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -15,11 +15,11 @@ public class Skill {
         this.baseDamage = baseDamage;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,4 +66,3 @@ public class Skill {
                 '}';
     }
 }
-

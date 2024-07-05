@@ -1,14 +1,12 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.EffectEnum;
-
 import java.util.List;
 
 public class DaedricArtifact extends Item {
     private List<Skill> specialSkills;
 
-    public DaedricArtifact(String name, String description, int value, EffectEnum effect, List<Skill> specialSkills) {
-        super(name, description, value, effect);
+    public DaedricArtifact(String name, String description, int value, String effect, String effectDescription, int effectBuff, List<Skill> specialSkills) {
+        super(name, description, value, effect, effectDescription, effectBuff);
         this.specialSkills = specialSkills;
     }
 
@@ -23,12 +21,7 @@ public class DaedricArtifact extends Item {
     @Override
     public String toString() {
         return "DaedricArtifact{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", value=" + getValue() +
-                ", effect=" + getEffect() +
-                ", specialSkills=" + specialSkills +
+                "specialSkills=" + getSpecialSkills() +
                 '}';
     }
 }
