@@ -87,4 +87,5 @@ public class Warrior extends Character {
                 "ragePoints=" + getRagePoints() +
                 '}';
     }
+
 }

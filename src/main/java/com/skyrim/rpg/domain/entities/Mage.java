@@ -89,4 +89,5 @@ public class Mage extends Character {
                 "manaRegenRate=" + getManaRegenRate() +
                 '}';
     }
+
 }
