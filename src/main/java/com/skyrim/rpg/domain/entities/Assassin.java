@@ -63,16 +63,11 @@ public class Assassin extends Character {
 
     @Override
     public int calculateSkillDamage(Skill skill) {
-        if ("Venomous Strike".equals(skill.getName())) {
-            int baseDamage = getStrengthPoints() * 2;
-            int poisonDamage = getPoisonDamage();
-
-            baseDamage += poisonDamage;
-
-            return baseDamage;
-        } else {
-            throw new IllegalArgumentException("Skill not supported for Assassin: " + skill.getName());
-        }
+        return switch (skill.getName()) {
+            case "Venomous Strike" -> getStrengthPoints() * 2 + getPoisonDamage();
+            case "Back-stab" -> getAgilityPoints() * 3;
+            default -> throw new IllegalArgumentException("Skill not supported for Assassin: " + skill.getName());
+        };
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.skyrim.rpg.domain.entities.Battle;
 import com.skyrim.rpg.domain.entities.Skill;
 import com.skyrim.rpg.domain.factories.EnemyFactory;
 import com.skyrim.rpg.domain.interfaces.usecases.BattleUseCaseInterface;
-import com.skyrim.rpg.domain.services.CharacterService;
 import com.skyrim.rpg.utils.BattleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,7 @@ public class BattleUseCase implements BattleUseCaseInterface {
     private Battle battle;
 
     @Autowired
-    public BattleUseCase(CharacterService characterService, EnemyFactory enemyFactory) {
+    public BattleUseCase(EnemyFactory enemyFactory) {
         this.enemyFactory = enemyFactory;
     }
 
@@ -49,7 +48,6 @@ public class BattleUseCase implements BattleUseCaseInterface {
         if (battle.isPlayerTurn()) {
             switch (action.toLowerCase()) {
                 case "attack":
-                    actionLog.append(battle.getPlayer().getName()).append(" attacks ").append(battle.getEnemy().getName()).append(". ");
                     attack();
                     break;
                 case "defend":
@@ -59,7 +57,7 @@ public class BattleUseCase implements BattleUseCaseInterface {
                     actionLog.append(battle.getPlayer().getName()).append(" attempts to flee from battle. ");
                     flee(actionLog);
                     break;
-                case "useskill":
+                case "use-skill":
                     useSkill(skillId);
                     break;
                 default:
@@ -92,6 +90,51 @@ public class BattleUseCase implements BattleUseCaseInterface {
     }
 
     private void enemyAttack() {
+        if (Math.random() <= 0.5) {
+            useRandomEnemySkill();
+        } else {
+            performNormalEnemyAttack();
+        }
+    }
+
+    private void useRandomEnemySkill() {
+        Skill skill = getRandomEnemySkill();
+
+        if (skill == null) {
+            performNormalEnemyAttack();
+            return;
+        }
+
+        int skillDamage = battle.getEnemy().calculateSkillDamage(skill);
+
+        switch (skill.getName()) {
+            case "Claw Swipe":
+            case "Fireball":
+            case "Ice Bolt":
+                if (isCriticalHit(battle.getEnemy())) {
+                    skillDamage = BattleUtils.calculateCriticalDamage(skillDamage);
+                    logMessage("Critical hit! " + battle.getEnemy().getName() + " uses " + skill.getName() + " dealing " + skillDamage + " damage to " + battle.getPlayer().getName());
+                } else {
+                    logMessage(battle.getEnemy().getName() + " uses " + skill.getName() + " dealing " + skillDamage + " damage to " + battle.getPlayer().getName());
+                }
+                BattleUtils.applyDamage(battle.getPlayer(), skillDamage);
+                break;
+            default:
+                logMessage("Enemy uses " + skill.getName() + ". Skill effect not implemented.");
+                break;
+        }
+    }
+
+    private Skill getRandomEnemySkill() {
+        List<Skill> enemySkills = battle.getEnemy().getSkills();
+        if (enemySkills.isEmpty()) {
+            return null;
+        }
+        int randomIndex = (int) (Math.random() * enemySkills.size());
+        return enemySkills.get(randomIndex);
+    }
+
+    private void performNormalEnemyAttack() {
         int damage = BattleUtils.calculateEnemyAttackDamage(battle.getEnemy());
         if (isCriticalHit(battle.getEnemy())) {
             damage = BattleUtils.calculateCriticalDamage(damage);
@@ -121,7 +164,8 @@ public class BattleUseCase implements BattleUseCaseInterface {
             case "Slash":
             case "Arrow Shot":
             case "Club Smash":
-            case "Bone Rattle", "Backstab":
+            case "Bone Rattle":
+            case "Back-stab":
                 if (isCriticalHit(battle.getPlayer())) {
                     skillDamage = BattleUtils.calculateCriticalDamage(skillDamage);
                     logMessage(skill.getName() + " is a critical hit! " + battle.getPlayer().getName() + " deals " + skillDamage + " damage to " + battle.getEnemy().getName());
@@ -188,8 +232,48 @@ public class BattleUseCase implements BattleUseCaseInterface {
 
     private void handleBattleEnd() {
         if (isBattleEnded()) {
+            if (battle.getPlayer().getHealthPoints() <= 0) {
+                logMessage(battle.getPlayer().getName() + " was defeated.");
+            } else {
+                int xpReward = battle.getEnemy().getXpReward();
+                battle.getPlayer().setXpPoints(battle.getPlayer().getXpPoints() + xpReward);
+                logMessage(battle.getPlayer().getName() + " earned " + xpReward + " XP from defeating " + battle.getEnemy().getName() + ".");
+
+                if (checkForLevelUp()) {
+                    levelUpPlayer();
+                    logMessage("Congratulations! " + battle.getPlayer().getName() + " leveled up to level " + battle.getPlayer().getLevel() + "!");
+                }
+
+                logMessage(battle.getPlayer().getName() + " won the battle against " + battle.getEnemy().getName() + ".");
+            }
+
             logMessage("Battle ended.");
         }
+    }
+
+    private boolean checkForLevelUp() {
+        int currentXP = battle.getPlayer().getXpPoints();
+        int requiredXP = calculateRequiredXPForNextLevel(battle.getPlayer().getLevel());
+        return currentXP >= requiredXP;
+    }
+
+    private int calculateRequiredXPForNextLevel(int currentLevel) {
+        return currentLevel * 100;
+    }
+
+    private void levelUpPlayer() {
+        Character player = battle.getPlayer();
+        int currentLevel = player.getLevel();
+        player.setLevel(currentLevel + 1);
+
+        player.setHealthPoints(player.getHealthPoints() + 10);
+        player.setManaPoints(player.getManaPoints() + 5);
+
+        logMessage(player.getName() + " leveled up to level " + player.getLevel() + ". New attributes: HP - " + player.getHealthPoints() + ", MP - " + player.getManaPoints());
+
+        int currentXP = player.getXpPoints();
+        int requiredXP = calculateRequiredXPForNextLevel(player.getLevel());
+        player.setXpPoints(currentXP - requiredXP);
     }
 
     private String logBattleState() {

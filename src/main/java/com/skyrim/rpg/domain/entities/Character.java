@@ -117,7 +117,7 @@ public abstract class Character {
                 skills.add(new Skill("3", "Fireball", "Magic", "A fiery projectile.", 20));
                 break;
             case "Assassin":
-                skills.add(new Skill("4", "Backstab", "Attack", "A sneaky attack from behind.", 25));
+                skills.add(new Skill("4", "Back-stab", "Attack", "A sneaky attack from behind.", 25));
                 break;
             case "Dragon":
                 skills.add(new Skill("5", "Fire Breath", "Magic", "A breath of fire.", 30));
