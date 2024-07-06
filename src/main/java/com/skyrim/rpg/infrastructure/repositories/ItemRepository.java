@@ -41,6 +41,10 @@ public class ItemRepository implements ItemRepositoryInterface {
 
     @Override
     public void delete(Item item) {
+        if (!itemMap.containsKey(item.getId())) {
+            throw new IllegalArgumentException("Item with ID " + item.getId() + " not found, cannot delete.");
+        }
         itemMap.remove(item.getId());
     }
+
 }
