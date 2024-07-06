@@ -1,7 +1,5 @@
 package com.skyrim.rpg.application.dto;
 
-import com.skyrim.rpg.domain.enums.RoleEnum;
-
 public class CreateCharacterDTO {
     private String name;
     private String description;

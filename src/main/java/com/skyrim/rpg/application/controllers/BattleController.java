@@ -1,4 +1,5 @@
 package com.skyrim.rpg.application.controllers;
+
 import com.skyrim.rpg.application.containers.GameContainer;
 import com.skyrim.rpg.application.dto.ActionRequestDTO;
 import com.skyrim.rpg.application.dto.BattleRequestDTO;
@@ -6,7 +7,6 @@ import com.skyrim.rpg.application.dto.LogMessageDTO;
 import com.skyrim.rpg.application.exceptions.BattleLogNotAvailableException;
 import com.skyrim.rpg.domain.entities.Character;
 import com.skyrim.rpg.domain.entities.Enemy;
-import com.skyrim.rpg.domain.enums.RoleEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class BattleController {
 
         gameContainer.getBattleService().startBattle(player);
 
-        Enemy enemy = gameContainer.getEnemyFactory().createEnemy(RoleEnum.ENEMY_DRAGON);
+        Enemy enemy = gameContainer.getEnemyFactory().createRandomEnemy();
         if (enemy == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of("error", "No enemy found for battle. Cannot proceed."));
         }
@@ -54,7 +54,7 @@ public class BattleController {
             return ResponseEntity.badRequest().body("Player not found with id: " + characterId);
         }
 
-        Enemy enemy = gameContainer.getEnemyFactory().createEnemy(RoleEnum.ENEMY_DRAGON);
+        Enemy enemy = gameContainer.getEnemyFactory().createEnemy("ENEMY_DRAGON");
         if (enemy == null) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No enemy found for battle. Cannot proceed.");
         }

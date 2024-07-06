@@ -1,15 +1,12 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.RoleEnum;
-import com.skyrim.rpg.domain.enums.SkillEnum;
-
 import java.util.List;
 
 public class Assassin extends Character {
     private int poisonDamage;
 
-    public Assassin(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role, int poisonDamage) {
-        super(name, description, level, xpPoints, items, skills, role);
+    public Assassin(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, String roleType, int poisonDamage) {
+        super(name, description, level, xpPoints, items, skills, roleType);
 
         if (level < 1) {
             throw new IllegalArgumentException("Level must be greater than or equal to 1.");
@@ -27,12 +24,16 @@ public class Assassin extends Character {
             throw new IllegalArgumentException("Skills list must be provided and not empty.");
         }
 
-        if (role == null) {
-            throw new IllegalArgumentException("Role must be provided.");
+        if (roleType == null || roleType.isEmpty()) {
+            throw new IllegalArgumentException("Role type must be provided.");
+        }
+
+        if (poisonDamage < 0) {
+            throw new IllegalArgumentException("Poison damage cannot be negative.");
         }
 
         this.poisonDamage = poisonDamage;
-        initializeRoleAttributes();
+        initializeRoleAttributes(roleType);
         addAttributesFromItems();
     }
 
@@ -44,10 +45,8 @@ public class Assassin extends Character {
             String effect = item.getEffect();
             int effectBuff = item.getEffectBuff();
 
-            switch (effect) {
-                case "Poison Damage":
-                    setPoisonDamage(getPoisonDamage() + effectBuff);
-                    break;
+            if ("Poison Damage".equals(effect)) {
+                setPoisonDamage(getPoisonDamage() + effectBuff);
             }
         }
     }
@@ -63,17 +62,16 @@ public class Assassin extends Character {
     }
 
     @Override
-    public int calculateSkillDamage(SkillEnum skill) {
-        switch (skill) {
-            case VENOMOUS_STRIKE:
-                int baseDamage = getStrengthPoints() * 2;
-                int poisonDamage = getPoisonDamage();
+    public int calculateSkillDamage(Skill skill) {
+        if ("Venomous Strike".equals(skill.getName())) {
+            int baseDamage = getStrengthPoints() * 2;
+            int poisonDamage = getPoisonDamage();
 
-                baseDamage += poisonDamage;
+            baseDamage += poisonDamage;
 
-                return baseDamage;
-            default:
-                throw new IllegalArgumentException("Skill not supported for Assassin: " + skill);
+            return baseDamage;
+        } else {
+            throw new IllegalArgumentException("Skill not supported for Assassin: " + skill.getName());
         }
     }
 

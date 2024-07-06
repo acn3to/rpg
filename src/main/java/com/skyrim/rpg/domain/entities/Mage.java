@@ -1,15 +1,12 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.RoleEnum;
-import com.skyrim.rpg.domain.enums.SkillEnum;
-
 import java.util.List;
 
 public class Mage extends Character {
     private int manaRegenRate;
 
-    public Mage(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role, int manaRegenRate) {
-        super(name, description, level, xpPoints, items, skills, role);
+    public Mage(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, String roleType, int manaRegenRate) {
+        super(name, description, level, xpPoints, items, skills, roleType);
 
         if (level < 1) {
             throw new IllegalArgumentException("Level must be greater than or equal to 1.");
@@ -27,12 +24,16 @@ public class Mage extends Character {
             throw new IllegalArgumentException("Skills list must be provided and not empty.");
         }
 
-        if (role == null) {
-            throw new IllegalArgumentException("Role must be provided.");
+        if (roleType == null || roleType.isEmpty()) {
+            throw new IllegalArgumentException("Role type must be provided.");
+        }
+
+        if (manaRegenRate < 0) {
+            throw new IllegalArgumentException("Mana regeneration rate cannot be negative.");
         }
 
         this.manaRegenRate = manaRegenRate;
-        initializeRoleAttributes();
+        initializeRoleAttributes(roleType);
         addAttributesFromItems();
     }
 
@@ -40,38 +41,29 @@ public class Mage extends Character {
     public void addAttributesFromItems() {
         super.addAttributesFromItems();
 
-        getItems().forEach(item -> {
+        for (Item item : getItems()) {
             String effect = item.getEffect();
             int effectValue = item.getEffectBuff();
 
-            switch (effect) {
-                case "Mana Regeneration":
-                    this.manaRegenRate += effectValue;
-                    break;
+            if ("Mana Regeneration".equals(effect)) {
+                this.manaRegenRate += effectValue;
             }
-        });
+        }
     }
 
     @Override
     public int calculateAttackDamage() {
         int baseDamage = getIntelligencePoints() * 3;
-
-        int manaRegenRate = getManaRegenRate();
-        baseDamage += manaRegenRate;
-
+        baseDamage += getManaRegenRate();
         return baseDamage;
     }
 
     @Override
-    public int calculateSkillDamage(SkillEnum skill) {
-        switch (skill) {
-            case GLACIAL_SPIKE:
-                int baseDamage = getIntelligencePoints() * 3;
-
-
-                return baseDamage;
-            default:
-                throw new IllegalArgumentException("Skill not supported for Mage: " + skill);
+    public int calculateSkillDamage(Skill skill) {
+        if ("Glacial Spike".equals(skill.getName())) {
+            return getIntelligencePoints() * 3;
+        } else {
+            throw new IllegalArgumentException("Skill not supported for Mage: " + skill.getName());
         }
     }
 

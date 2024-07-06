@@ -1,18 +1,15 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.RoleEnum;
-import com.skyrim.rpg.domain.enums.SkillEnum;
-
 import java.util.List;
 
 public class Enemy extends Character {
     private String type;
     private int xpReward;
 
-    public Enemy(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role) {
-        super(name, description, level, xpPoints, items, skills, role);
-        this.type = role.getType();
-        this.xpReward = role.getXpReward();
+    public Enemy(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, String type, int xpReward) {
+        super(name, description, level, xpPoints, items, skills, type);
+        this.type = type;
+        this.xpReward = xpReward;
     }
 
     @Override
@@ -21,7 +18,7 @@ public class Enemy extends Character {
     }
 
     @Override
-    public int calculateSkillDamage(SkillEnum skill) {
+    public int calculateSkillDamage(Skill skill) {
         return getStrengthPoints() * 3;
     }
 
@@ -29,7 +26,6 @@ public class Enemy extends Character {
     public double calculateCriticalChance() {
         return 1.0;
     }
-
 
     public String getType() {
         return type;

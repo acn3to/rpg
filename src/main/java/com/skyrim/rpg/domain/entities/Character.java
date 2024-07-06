@@ -1,8 +1,5 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.RoleEnum;
-import com.skyrim.rpg.domain.enums.SkillEnum;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -22,9 +19,9 @@ public abstract class Character {
     private int staminaPoints;
     private List<Item> items;
     private List<Skill> skills;
-    private RoleEnum role;
+    private String roleType;
 
-    public Character(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role) {
+    public Character(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, String roleType) {
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
@@ -32,41 +29,114 @@ public abstract class Character {
         this.xpPoints = xpPoints;
         this.items = items != null ? items : new ArrayList<>();
         this.skills = skills != null ? skills : new ArrayList<>();
-        this.role = role;
-        initializeRoleAttributes();
-        addDefaultSkills();
+        this.roleType = roleType;
+        initializeRoleAttributes(roleType);
+        addDefaultSkills(roleType);
         addAttributesFromItems();
     }
 
-    protected void initializeRoleAttributes() {
-        RoleEnum role = getRole();
-        if (role != null) {
-            this.healthPoints = role.getHealthPoints();
-            this.strengthPoints = role.getStrengthPoints();
-            this.defensePoints = role.getDefensePoints();
-            this.agilityPoints = role.getAgilityPoints();
-            this.intelligencePoints = role.getIntelligencePoints();
-            this.manaPoints = role.getManaPoints();
-            this.staminaPoints = role.getStaminaPoints();
+    protected void initializeRoleAttributes(String roleType) {
+        switch (roleType) {
+            case "Warrior":
+                this.healthPoints = 100;
+                this.strengthPoints = 15;
+                this.defensePoints = 10;
+                this.agilityPoints = 5;
+                this.intelligencePoints = 5;
+                this.manaPoints = 5;
+                this.staminaPoints = 20;
+                break;
+            case "Archer":
+                this.healthPoints = 80;
+                this.strengthPoints = 10;
+                this.defensePoints = 5;
+                this.agilityPoints = 15;
+                this.intelligencePoints = 5;
+                this.manaPoints = 5;
+                this.staminaPoints = 20;
+                break;
+            case "Mage":
+                this.healthPoints = 60;
+                this.strengthPoints = 5;
+                this.defensePoints = 5;
+                this.agilityPoints = 5;
+                this.intelligencePoints = 20;
+                this.manaPoints = 20;
+                this.staminaPoints = 10;
+                break;
+            case "Assassin":
+                this.healthPoints = 70;
+                this.strengthPoints = 10;
+                this.defensePoints = 5;
+                this.agilityPoints = 20;
+                this.intelligencePoints = 5;
+                this.manaPoints = 5;
+                this.staminaPoints = 20;
+                break;
+            case "Dragon":
+                this.healthPoints = 200;
+                this.strengthPoints = 25;
+                this.defensePoints = 15;
+                this.agilityPoints = 10;
+                this.intelligencePoints = 10;
+                this.manaPoints = 10;
+                this.staminaPoints = 30;
+                break;
+            case "Goblin":
+                this.healthPoints = 50;
+                this.strengthPoints = 5;
+                this.defensePoints = 5;
+                this.agilityPoints = 10;
+                this.intelligencePoints = 5;
+                this.manaPoints = 5;
+                this.staminaPoints = 10;
+                break;
+            case "Skeleton":
+                this.healthPoints = 40;
+                this.strengthPoints = 5;
+                this.defensePoints = 5;
+                this.agilityPoints = 5;
+                this.intelligencePoints = 5;
+                this.manaPoints = 5;
+                this.staminaPoints = 10;
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown role type: " + roleType);
         }
     }
 
-    protected void addDefaultSkills() {
-        for (SkillEnum skillEnum : role.getDefaultSkills()) {
-            skills.add(new Skill(
-                    skillEnum.getId(),
-                    skillEnum.getName(),
-                    skillEnum.getType(),
-                    skillEnum.getDescription(),
-                    skillEnum.getBaseDamage()
-            ));
+    protected void addDefaultSkills(String roleType) {
+        switch (roleType) {
+            case "Warrior":
+                skills.add(new Skill("1", "Slash", "Attack", "A powerful slash with a sword.", 15));
+                break;
+            case "Archer":
+                skills.add(new Skill("2", "Arrow Shot", "Attack", "A precise shot with a bow.", 10));
+                break;
+            case "Mage":
+                skills.add(new Skill("3", "Fireball", "Magic", "A fiery projectile.", 20));
+                break;
+            case "Assassin":
+                skills.add(new Skill("4", "Backstab", "Attack", "A sneaky attack from behind.", 25));
+                break;
+            case "Dragon":
+                skills.add(new Skill("5", "Fire Breath", "Magic", "A breath of fire.", 30));
+                break;
+            case "Goblin":
+                skills.add(new Skill("6", "Club Smash", "Attack", "A smash with a club.", 5));
+                break;
+            case "Skeleton":
+                skills.add(new Skill("7", "Bone Rattle", "Attack", "A rattling bone attack.", 5));
+                break;
+            default:
+                throw new IllegalArgumentException("Unknown role type: " + roleType);
         }
     }
 
     protected void addAttributesFromItems() {
         for (Item item : items) {
             String effect = item.getEffect();
-            int effectBuff = (int) item.getEffectBuff();
+            int effectBuff = item.getEffectBuff();
 
             switch (effect) {
                 case "Health Points":
@@ -105,7 +175,7 @@ public abstract class Character {
 
     public abstract int calculateAttackDamage();
 
-    public abstract int calculateSkillDamage(SkillEnum skill);
+    public abstract int calculateSkillDamage(Skill skill);
 
     public abstract double calculateCriticalChance();
 
@@ -217,12 +287,12 @@ public abstract class Character {
         this.skills = skills;
     }
 
-    public RoleEnum getRole() {
-        return role;
+    public String getRoleType() {
+        return roleType;
     }
 
-    public void setRole(RoleEnum role) {
-        this.role = role;
+    public void setRoleType(String roleType) {
+        this.roleType = roleType;
     }
 
     @Override
@@ -237,12 +307,12 @@ public abstract class Character {
                 ", strengthPoints=" + getStrengthPoints() +
                 ", defensePoints=" + getDefensePoints() +
                 ", agilityPoints=" + getAgilityPoints() +
-                ", intelligencePoints=" + getAgilityPoints() +
+                ", intelligencePoints=" + getIntelligencePoints() +
                 ", manaPoints=" + getManaPoints() +
                 ", staminaPoints=" + getStaminaPoints() +
                 ", items=" + getItems() +
                 ", skills=" + getSkills() +
-                ", role=" + getRole() +
+                ", roleType='" + getRoleType() + '\'' +
                 '}';
     }
 }

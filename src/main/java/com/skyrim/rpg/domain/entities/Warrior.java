@@ -1,15 +1,12 @@
 package com.skyrim.rpg.domain.entities;
 
-import com.skyrim.rpg.domain.enums.RoleEnum;
-import com.skyrim.rpg.domain.enums.SkillEnum;
-
 import java.util.List;
 
 public class Warrior extends Character {
     private int ragePoints;
 
-    public Warrior(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, RoleEnum role, int ragePoints) {
-        super(name, description, level, xpPoints, items, skills, role);
+    public Warrior(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, String roleType, int ragePoints) {
+        super(name, description, level, xpPoints, items, skills, roleType);
 
         if (level < 1) {
             throw new IllegalArgumentException("Level must be greater than or equal to 1.");
@@ -27,30 +24,23 @@ public class Warrior extends Character {
             throw new IllegalArgumentException("Skills list must be provided and not empty.");
         }
 
-        if (role == null) {
-            throw new IllegalArgumentException("Role must be provided.");
-        }
-
         this.ragePoints = ragePoints;
-        initializeRoleAttributes();
+        initializeRoleAttributes(roleType);
         addAttributesFromItems();
     }
-
 
     @Override
     public void addAttributesFromItems() {
         super.addAttributesFromItems();
 
-        getItems().forEach(item -> {
+        for (Item item : getItems()) {
             String effect = item.getEffect();
             int effectBuff = item.getEffectBuff();
 
-            switch (effect) {
-                case "Rage Points":
-                    this.ragePoints += effectBuff;
-                    break;
+            if ("Rage Points".equals(effect)) {
+                this.ragePoints += effectBuff;
             }
-        });
+        }
     }
 
     @Override
@@ -64,16 +54,14 @@ public class Warrior extends Character {
     }
 
     @Override
-    public int calculateSkillDamage(SkillEnum skill) {
-        switch (skill) {
-            case THUNDEROUS_BLOW:
-                int baseDamage = getStrengthPoints() * 3;
-                int ragePoints = getRagePoints();
-                //TODO: Add effects ragePoints based
+    public int calculateSkillDamage(Skill skill) {
+        if ("Thunderous Blow".equals(skill.getName())) {
+            int baseDamage = getStrengthPoints() * 3;
+            int ragePoints = getRagePoints();
 
-                return baseDamage;
-            default:
-                throw new IllegalArgumentException("Skill not supported for Warrior: " + skill);
+            return baseDamage;
+        } else {
+            throw new IllegalArgumentException("Skill not supported for Warrior: " + skill.getName());
         }
     }
 

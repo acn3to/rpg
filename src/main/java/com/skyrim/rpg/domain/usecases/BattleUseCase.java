@@ -3,7 +3,7 @@ package com.skyrim.rpg.domain.usecases;
 import com.skyrim.rpg.domain.entities.Character;
 import com.skyrim.rpg.domain.entities.Enemy;
 import com.skyrim.rpg.domain.entities.Battle;
-import com.skyrim.rpg.domain.enums.SkillEnum;
+import com.skyrim.rpg.domain.entities.Skill;
 import com.skyrim.rpg.domain.factories.EnemyFactory;
 import com.skyrim.rpg.domain.interfaces.usecases.BattleUseCaseInterface;
 import com.skyrim.rpg.domain.services.CharacterService;
@@ -108,15 +108,20 @@ public class BattleUseCase implements BattleUseCaseInterface {
     }
 
     private void useSkill(String skillId) {
-        SkillEnum skill = SkillEnum.valueOf(skillId.toUpperCase());
+        Skill skill = findSkillById(skillId);
+
+        if (skill == null) {
+            logMessage("Skill with id " + skillId + " not found.");
+            return;
+        }
+
         int skillDamage = battle.getPlayer().calculateSkillDamage(skill);
 
-        switch (skill) {
-            case PRECISION_SHOT:
-            case THUNDEROUS_BLOW:
-            case GLACIAL_SPIKE:
-            case VENOMOUS_STRIKE:
-            case BASIC_ATTACK:
+        switch (skill.getName()) {
+            case "Slash":
+            case "Arrow Shot":
+            case "Club Smash":
+            case "Bone Rattle", "Backstab":
                 if (isCriticalHit(battle.getPlayer())) {
                     skillDamage = BattleUtils.calculateCriticalDamage(skillDamage);
                     logMessage(skill.getName() + " is a critical hit! " + battle.getPlayer().getName() + " deals " + skillDamage + " damage to " + battle.getEnemy().getName());
@@ -125,15 +130,24 @@ public class BattleUseCase implements BattleUseCaseInterface {
                 }
                 BattleUtils.applyDamage(battle.getEnemy(), skillDamage);
                 break;
-            case HEAL:
-                int healAmount = 20;
-                battle.getPlayer().setHealthPoints(Math.min(battle.getPlayer().getHealthPoints() + healAmount, battle.getPlayer().getHealthPoints()));
-                logMessage(battle.getPlayer().getName() + " used " + skill.getName() + " and healed for " + healAmount + " health points.");
+            case "Fireball":
+            case "Fire Breath":
+                logMessage(battle.getPlayer().getName() + " used " + skill.getName() + " dealing " + skillDamage + " damage to " + battle.getEnemy().getName());
+                BattleUtils.applyDamage(battle.getEnemy(), skillDamage);
                 break;
             default:
-                logMessage("Skill " + skill + " is not implemented.");
+                logMessage("Skill " + skill.getName() + " is not implemented.");
                 break;
         }
+    }
+
+    private Skill findSkillById(String skillId) {
+        for (Skill skill : battle.getPlayer().getSkills()) {
+            if (skill.getId().equals(skillId)) {
+                return skill;
+            }
+        }
+        return null;
     }
 
     private void defend() {

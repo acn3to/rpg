@@ -85,7 +85,7 @@ public class Item {
                 ", description='" + getDescription() + '\'' +
                 ", value=" + getValue() +
                 ", effect='" + getEffect() + '\'' +
-                ", effectDescription='" + getDescription() + '\'' +
+                ", effectDescription='" + getEffectDescription() + '\'' +
                 ", effectBuff=" + getEffectBuff() +
                 '}';
     }
