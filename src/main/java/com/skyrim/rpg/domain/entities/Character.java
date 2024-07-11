@@ -1,9 +1,14 @@
 package com.skyrim.rpg.domain.entities;
 
+import com.skyrim.rpg.domain.enums.RoleEnum;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Abstract class representing a character in the RPG game.
+ */
 public abstract class Character {
     private final String id;
     private String name;
@@ -11,6 +16,7 @@ public abstract class Character {
     private int level;
     private int xpPoints;
     private int healthPoints;
+    private int maxHealthPoints;
     private int strengthPoints;
     private int defensePoints;
     private int agilityPoints;
@@ -19,120 +25,58 @@ public abstract class Character {
     private int staminaPoints;
     private List<Item> items;
     private List<Skill> skills;
-    private String roleType;
+    private RoleEnum roleType;
 
-    public Character(String name, String description, int level, int xpPoints, List<Item> items, List<Skill> skills, String roleType) {
+    /**
+     * Constructs a character with specified attributes.
+     *
+     * @param name        The name of the character.
+     * @param description The description of the character.
+     * @param level       The level of the character.
+     * @param xpPoints    The experience points of the character.
+     * @param items       The list of items carried by the character.
+     * @param roleType    The role type (class) of the character.
+     * @throws IllegalArgumentException if any of the parameters are invalid or null.
+     */
+    public Character(String name, String description, int level, int xpPoints, List<Item> items, RoleEnum roleType) {
+        if (name == null || name.isEmpty()) throw new IllegalArgumentException("Name must be provided.");
+        if (description == null || description.isEmpty()) throw new IllegalArgumentException("Description must be provided.");
+        if (level < 1) throw new IllegalArgumentException("Level must be greater than or equal to 1.");
+        if (xpPoints < 0) throw new IllegalArgumentException("XP points cannot be negative.");
+        if (items == null) throw new IllegalArgumentException("Items list must be provided and not null.");
+        if (roleType == null) throw new IllegalArgumentException("Role type must be provided.");
+
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.description = description;
         this.level = level;
         this.xpPoints = xpPoints;
-        this.items = items != null ? items : new ArrayList<>();
-        this.skills = skills != null ? skills : new ArrayList<>();
+        this.items = items;
         this.roleType = roleType;
         initializeRoleAttributes(roleType);
-        addDefaultSkills(roleType);
         addAttributesFromItems();
+        initializeDefaultSkills();
+        this.maxHealthPoints = this.healthPoints; // Initialize maxHealthPoints
     }
 
-    protected void initializeRoleAttributes(String roleType) {
-        switch (roleType) {
-            case "Warrior":
-                this.healthPoints = 100;
-                this.strengthPoints = 15;
-                this.defensePoints = 10;
-                this.agilityPoints = 5;
-                this.intelligencePoints = 5;
-                this.manaPoints = 5;
-                this.staminaPoints = 20;
-                break;
-            case "Archer":
-                this.healthPoints = 80;
-                this.strengthPoints = 10;
-                this.defensePoints = 5;
-                this.agilityPoints = 15;
-                this.intelligencePoints = 5;
-                this.manaPoints = 5;
-                this.staminaPoints = 20;
-                break;
-            case "Mage":
-                this.healthPoints = 60;
-                this.strengthPoints = 5;
-                this.defensePoints = 5;
-                this.agilityPoints = 5;
-                this.intelligencePoints = 20;
-                this.manaPoints = 20;
-                this.staminaPoints = 10;
-                break;
-            case "Assassin":
-                this.healthPoints = 70;
-                this.strengthPoints = 10;
-                this.defensePoints = 5;
-                this.agilityPoints = 20;
-                this.intelligencePoints = 5;
-                this.manaPoints = 5;
-                this.staminaPoints = 20;
-                break;
-            case "Dragon":
-                this.healthPoints = 200;
-                this.strengthPoints = 25;
-                this.defensePoints = 15;
-                this.agilityPoints = 10;
-                this.intelligencePoints = 10;
-                this.manaPoints = 10;
-                this.staminaPoints = 30;
-                break;
-            case "Goblin":
-                this.healthPoints = 50;
-                this.strengthPoints = 5;
-                this.defensePoints = 5;
-                this.agilityPoints = 10;
-                this.intelligencePoints = 5;
-                this.manaPoints = 5;
-                this.staminaPoints = 10;
-                break;
-            case "Skeleton":
-                this.healthPoints = 40;
-                this.strengthPoints = 5;
-                this.defensePoints = 5;
-                this.agilityPoints = 5;
-                this.intelligencePoints = 5;
-                this.manaPoints = 5;
-                this.staminaPoints = 10;
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown role type: " + roleType);
-        }
+    /**
+     * Initializes role-specific attributes based on the role type.
+     *
+     * @param roleType The role type (class) of the character.
+     */
+    protected void initializeRoleAttributes(RoleEnum roleType) {
+        this.healthPoints = roleType.getHealth();
+        this.strengthPoints = roleType.getStrength();
+        this.defensePoints = roleType.getDefense();
+        this.agilityPoints = roleType.getAgility();
+        this.intelligencePoints = roleType.getIntelligence();
+        this.manaPoints = roleType.getMana();
+        this.staminaPoints = roleType.getStamina();
     }
 
-    protected void addDefaultSkills(String roleType) {
-        switch (roleType) {
-            case "Warrior":
-                skills.add(new Skill("1", "Slash", "Attack", "A powerful slash with a sword.", 15));
-                break;
-            case "Archer":
-                skills.add(new Skill("2", "Arrow Shot", "Attack", "A precise shot with a bow.", 10));
-                break;
-            case "Mage":
-                skills.add(new Skill("3", "Fireball", "Magic", "A fiery projectile.", 20));
-                break;
-            case "Assassin":
-                skills.add(new Skill("4", "Back-stab", "Attack", "A sneaky attack from behind.", 25));
-                break;
-            case "Dragon":
-                skills.add(new Skill("5", "Fire Breath", "Magic", "A breath of fire.", 30));
-                break;
-            case "Goblin":
-                skills.add(new Skill("6", "Club Smash", "Attack", "A smash with a club.", 5));
-                break;
-            case "Skeleton":
-                skills.add(new Skill("7", "Bone Rattle", "Attack", "A rattling bone attack.", 5));
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown role type: " + roleType);
-        }
-    }
-
+    /**
+     * Adds attribute bonuses from equipped items.
+     */
     protected void addAttributesFromItems() {
         for (Item item : items) {
             String effect = item.getEffect();
@@ -166,17 +110,33 @@ public abstract class Character {
         }
     }
 
-    protected void addItem(Item item) {
-        if (item != null) {
-            items.add(item);
-            addAttributesFromItems();
-        }
+    /**
+     * Initializes default skills based on the character's role type.
+     */
+    protected void initializeDefaultSkills() {
+        this.skills = new ArrayList<>(roleType.getDefaultSkills());
     }
 
+    /**
+     * Abstract method to calculate the attack damage of the character.
+     *
+     * @return The calculated attack damage.
+     */
     public abstract int calculateAttackDamage();
 
+    /**
+     * Abstract method to calculate the skill damage of the character using a specific skill.
+     *
+     * @param skill The skill to calculate damage for.
+     * @return The calculated skill damage.
+     */
     public abstract int calculateSkillDamage(Skill skill);
 
+    /**
+     * Abstract method to calculate the critical hit chance of the character.
+     *
+     * @return The calculated critical hit chance.
+     */
     public abstract double calculateCriticalChance();
 
     public String getId() {
@@ -287,12 +247,20 @@ public abstract class Character {
         this.skills = skills;
     }
 
-    public String getRoleType() {
+    public RoleEnum getRoleType() {
         return roleType;
     }
 
-    public void setRoleType(String roleType) {
+    public void setRoleType(RoleEnum roleType) {
         this.roleType = roleType;
+    }
+
+    public int getMaxHealthPoints() {
+        return maxHealthPoints;
+    }
+
+    public void setMaxHealthPoints(int maxHealthPoints) {
+        this.maxHealthPoints = maxHealthPoints;
     }
 
     @Override
@@ -310,9 +278,7 @@ public abstract class Character {
                 ", intelligencePoints=" + getIntelligencePoints() +
                 ", manaPoints=" + getManaPoints() +
                 ", staminaPoints=" + getStaminaPoints() +
-                ", items=" + getItems() +
-                ", skills=" + getSkills() +
-                ", roleType='" + getRoleType() + '\'' +
+                ", roleType=" + getRoleType() +
                 '}';
     }
 }
